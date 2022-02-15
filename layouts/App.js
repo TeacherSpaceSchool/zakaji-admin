@@ -19,6 +19,7 @@ import { useSubscription } from '@apollo/react-hooks';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import * as snackbarActions from '../redux/actions/snackbar'
 import { start } from '../src/service/idb'
+import * as mini_dialogActions from '../redux/actions/mini_dialog'
 export const mainWindow = React.createRef();
 export const alert = React.createRef();
 export let containerRef;
@@ -29,10 +30,12 @@ const App = React.memo(props => {
     const { profile, authenticated } = props.user;
     const { load, search, showAppBar, filter } = props.app;
     let { checkPagination, sorts, filters, pageName, dates, searchShow, setList, list, defaultOpenSearch, organizations, cityShow, agents } = props;
+    const { showFull, show  } = props.mini_dialog;
     const router = useRouter();
     const [unread, setUnread] = useState({});
     const [reloadPage, setReloadPage] = useState(false);
     const { showSnackBar } = props.snackbarActions;
+    const { showMiniDialog, showFullDialog } = props.mini_dialogActions;
     useEffect( ()=>{
         if(authenticated&&!profile.role)
             setProfile()
@@ -154,6 +157,25 @@ const App = React.memo(props => {
                 }
             }
     },[subscriptionOrderRes.data])
+    useEffect(() => {
+        if(process.browser) {
+            router.beforePopState(() => {
+                if(show||showFull) {
+                    history.go(1)
+                    showMiniDialog(false)
+                    showFullDialog(false)
+                    return false
+                }
+                else
+                    return true
+            })
+            return () => {
+                router.beforePopState(() => {
+                    return true
+                })
+            }
+        }
+    }, [process.browser, show, showFull]);
 
     return(
         <div ref={mainWindow} className='App'>
@@ -187,7 +209,8 @@ const App = React.memo(props => {
 function mapStateToProps (state) {
     return {
         user: state.user,
-        app: state.app
+        app: state.app,
+        mini_dialog: state.mini_dialog
     }
 }
 
@@ -196,6 +219,7 @@ function mapDispatchToProps(dispatch) {
         userActions: bindActionCreators(userActions, dispatch),
         appActions: bindActionCreators(appActions, dispatch),
         snackbarActions: bindActionCreators(snackbarActions, dispatch),
+        mini_dialogActions: bindActionCreators(mini_dialogActions, dispatch),
     }
 }
 
