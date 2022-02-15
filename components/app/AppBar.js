@@ -40,6 +40,7 @@ import SetCities from '../dialog/SetCities'
 import { getActiveOrganization } from '../../src/gql/statistic'
 import { getAgents } from '../../src/gql/employment'
 import { setCityCookie } from '../../src/lib'
+import {pdDDMMYY} from '../../src/lib'
 
 const MyAppBar = React.memo((props) => {
     //props
@@ -208,7 +209,7 @@ const MyAppBar = React.memo((props) => {
                                     [
                                         <MenuItem key='filterMenu' onClick={handleMenuFilter} style={{background: filter?'rgba(51, 143, 255, 0.29)': '#fff'}}>
                                             <div style={{display: 'flex', color: '#606060'}}>
-                                                <FilterList/>&nbsp;Фильтр
+                                                <FilterList/>&nbsp;{filter?filter:'Фильтр'}
                                             </div>
                                         </MenuItem>,
                                         <Menu
@@ -233,9 +234,29 @@ const MyAppBar = React.memo((props) => {
                                 }
                                 {sorts&&sorts.length>0?
                                     [
-                                        <MenuItem key='sortMenu' onClick={handleMenuSort}>
+                                        <MenuItem key='sortMenu' onClick={handleMenuSort} style={{background: sort?'rgba(51, 143, 255, 0.29)': '#fff'}}>
                                             <div style={{display: 'flex', color: '#606060'}}>
-                                                <Sort/>&nbsp;Сортировка
+                                                {
+                                                    sort?
+                                                        <>
+                                                        {sort[0]==='-'?<ArrowDownward />:<ArrowUpward/>}&nbsp;
+                                                        {
+                                                            (sorts.find(elem=>{
+                                                                return sort===elem.field||`-${elem.field}`===sort?elem.name:null
+                                                            }))?
+                                                                (sorts.find(elem=>{
+                                                                    return sort===elem.field||`-${elem.field}`===sort?elem.name:null
+                                                                })).name
+                                                                :
+                                                                'Сортировка'
+                                                        }
+                                                        </>
+                                                        :
+                                                        <>
+                                                        <Sort/>&nbsp;
+                                                        Сортировка
+                                                        </>
+                                                }
                                             </div>
                                         </MenuItem>,
                                         <Menu
@@ -253,7 +274,7 @@ const MyAppBar = React.memo((props) => {
                                             open={openSort}
                                             onClose={handleCloseSort}
                                         >
-                                            {sorts.map((elem, idx)=><MenuItem key={'sort'+idx} onClick={()=>{sort===`-${elem.field}`?setSort(elem.field):setSort(`-${elem.field}`);handleCloseSort();handleCloseMobileMenu()}}>{sort===`-${elem.field}`?<ArrowDownward />:sort===elem.field?<ArrowUpward />:<div style={{width: '24px'}}/>}{elem.name}</MenuItem>)}
+                                            {sorts.map((elem, idx)=><MenuItem style={{background: sort===elem.field||`-${elem.field}`===sort?'rgba(51, 143, 255, 0.29)': '#fff'}} key={'sort'+idx} onClick={()=>{sort===`-${elem.field}`?setSort(elem.field):setSort(`-${elem.field}`);handleCloseSort();handleCloseMobileMenu()}}>{sort===`-${elem.field}`?<ArrowDownward />:sort===elem.field?<ArrowUpward />:<div style={{width: '24px'}}/>}{elem.name}</MenuItem>)}
                                         </Menu>
                                     ]
                                     :null
@@ -262,7 +283,7 @@ const MyAppBar = React.memo((props) => {
                                     [
                                         <MenuItem key='dateMenu' onClick={handleMenuDate} style={{background: date?'rgba(51, 143, 255, 0.29)': '#fff'}}>
                                             <div style={{display: 'flex', color: '#606060'}}>
-                                                <DateRange/>&nbsp;Дата
+                                                <DateRange/>&nbsp;{date?pdDDMMYY(date):'Дата'}
                                             </div>
                                         </MenuItem>,
                                         <Menu
@@ -358,7 +379,7 @@ const MyAppBar = React.memo((props) => {
                                     [
                                         <MenuItem key='cityMenu' onClick={handleMenuCities} style={{background: city?'rgba(51, 143, 255, 0.29)': '#fff'}}>
                                             <div style={{display: 'flex', color: '#606060'}}>
-                                                <LocationCityIcon/>&nbsp;Город
+                                                <LocationCityIcon/>&nbsp;{city?city:'Город'}
                                             </div>
                                         </MenuItem>,
                                         <Menu
