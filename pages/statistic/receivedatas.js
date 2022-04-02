@@ -76,6 +76,14 @@ const Integrates = React.memo((props) => {
 
 Integrates.getInitialProps = async function(ctx) {
     await initialApp(ctx)
+    if(['суперорганизация', 'организация', 'менеджер'].includes(ctx.store.getState().user.profile.role))
+        if(ctx.res) {
+            ctx.res.writeHead(302, {
+                Location: `/statistic/receivedata/${ctx.store.getState().user.profile.organization}`
+            })
+            ctx.res.end()
+        } else
+            Router.push(`/statistic/receivedata/${ctx.store.getState().user.profile.organization}`)
     if(!['admin'].includes(ctx.store.getState().user.profile.role))
         if(ctx.res) {
             ctx.res.writeHead(302, {

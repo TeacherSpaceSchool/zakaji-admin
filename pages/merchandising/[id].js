@@ -196,7 +196,7 @@ const Merchandising = React.memo((props) => {
                 <CardContent className={classes.column} style={isMobileApp?{}:{justifyContent: 'start', alignItems: 'flex-start'}}>
                 {
                     data.merchandising?
-                        ['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент'].includes(profile.role)?
+                        ['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент', 'мерчендайзер'].includes(profile.role)?
                             <>
                             {router.query.id==='new'&&['суперагент', 'admin'].includes(profile.role)?
                                 <Autocomplete
@@ -728,7 +728,7 @@ const Merchandising = React.memo((props) => {
 
 Merchandising.getInitialProps = async function(ctx) {
     await initialApp(ctx)
-    if(!['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент'].includes(ctx.store.getState().user.profile.role))
+    if(!['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент', 'мерчендайзер'].includes(ctx.store.getState().user.profile.role))
         if(ctx.res) {
             ctx.res.writeHead(302, {
                 Location: '/contact'

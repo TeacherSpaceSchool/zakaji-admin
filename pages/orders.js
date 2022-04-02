@@ -161,7 +161,7 @@ const Orders = React.memo((props) => {
                             return(
                                 <LazyLoad scrollContainer={'.App-body'} key={element._id} height={height} offset={[height, 0]} debounce={0} once={true}  placeholder={<CardOrderPlaceholder/>}>
                                     <ClickNHold
-                                        style={{background: selected.includes(element._id)?'rgba(51, 143, 255, 0.29)':null}}
+                                        style={{background: selected.includes(element._id)?'rgba(255, 179, 0, 0.15)':null}}
                                         time={3}
                                         onClickNHold={()=>{
                                             if(profile.role==='admin'&&(element.cancelClient||element.cancelForwarder))

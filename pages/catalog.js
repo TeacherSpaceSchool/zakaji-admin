@@ -26,6 +26,7 @@ import CardCatalogPlaceholder from '../components/catalog/CardCatalogPlaceholder
 import initialApp from '../src/initialApp'
 import { getBrandOrganizations, getBrands } from '../src/gql/items'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {getSpecialPriceClients} from '../src/gql/specialPrice';
 
 const Catalog = React.memo((props) => {
     const classes = pageListStyle();
@@ -34,6 +35,7 @@ const Catalog = React.memo((props) => {
     const { profile } = props.user;
     const { data } = props;
     const [clients, setClients] = useState([]);
+    let [normalPrices, setNormalPrices] = useState(data.normalPrices);
     const { search } = props.app;
     const [inputValue, setInputValue] = React.useState('');
     let [searchTimeOut, setSearchTimeOut] = useState(null);
@@ -42,12 +44,30 @@ const Catalog = React.memo((props) => {
     const [loading, setLoading] = useState(true);
     const initialRender = useRef(true);
     const getList = async ()=>{
+        normalPrices = {}
         if(organization&&organization._id) {
-            setList((await getBrands({organization: organization._id, search: search, sort: '-priotiry'})).brands);
+            list = (await getBrands({organization: organization._id, search: search, sort: '-priotiry'})).brands
+            for(let i=0; i<list.length; i++){
+                normalPrices[list[i]._id] = list[i].price
+            }
+            if(client){
+                const specialPrices = await getSpecialPriceClients({client: client._id, organization: organization._id})
+                while(specialPrices.length) {
+                    for(let i=0; i<list.length; i++){
+                        if(specialPrices[0].item._id===list[i]._id) {
+                            list[i].price = specialPrices[0].price
+                            specialPrices.splice(0, 1)
+                            break
+                        }
+                    }
+                }
+            }
+            setList([...list]);
             (document.getElementsByClassName('App-body'))[0].scroll({top: 0, left: 0, behavior: 'instant'});
             setPagination(100);
             forceCheck();
         }
+        setNormalPrices({...normalPrices})
     }
     useEffect(() => {
         (async()=>{
@@ -76,9 +96,9 @@ const Catalog = React.memo((props) => {
     const handleChange = event => {
         setInputValue(event.target.value);
     };
-    const [list, setList] = useState(data.brands);
+    let [list, setList] = useState(data.brands);
     const [basket, setBasket] = useState({});
-    let [organization, setOrganization] = useState({});
+    let [organization, setOrganization] = useState(data.organization);
     let [geo, setGeo] = useState(undefined);
     let handleOrganization = async (organization) => {
         await deleteBasketAll()
@@ -135,7 +155,24 @@ const Catalog = React.memo((props) => {
         })()
     },[search])
     let [client, setClient] = useState(data.client);
-    let handleClient =  (client) => {
+    let handleClient = async (client) => {
+        for(let i=0; i<list.length; i++){
+            if(normalPrices[list[i]._id]!=undefined)
+                list[i].price = normalPrices[list[i]._id]
+        }
+        if(client&&organization&&organization._id){
+            const specialPrices = await getSpecialPriceClients({client: client._id, organization: organization._id})
+            while(specialPrices.length) {
+                for(let i=0; i<list.length; i++){
+                    if(specialPrices[0].item._id===list[i]._id) {
+                        list[i].price = specialPrices[0].price
+                        specialPrices.splice(0, 1)
+                        break
+                    }
+                }
+            }
+        }
+        setList([...list]);
         setClient(client)
         setOpen(false)
     };
@@ -447,12 +484,31 @@ Catalog.getInitialProps = async function(ctx) {
         } else
             Router.push('/contact')
     await deleteBasketAll(ctx.req?await getClientGqlSsr(ctx.req):undefined)
+    let brands = ctx.store.getState().user.profile.organization?(await getBrands({organization: ctx.store.getState().user.profile.organization, search: '', sort: '-priotiry'}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).brands:[]
+    let normalPrices = {}
+    for(let i=0; i<brands.length; i++){
+        normalPrices[brands[i]._id] = brands[i].price
+    }
+    let client = ctx.query.client?(await getClient({_id: ctx.query.client}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).client:undefined
+    if(ctx.store.getState().user.profile.organization&&ctx.query.client){
+        const specialPrices = await getSpecialPriceClients({client: ctx.store.getState().user.profile.client, organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
+        while(specialPrices.length) {
+            for(let i=0; i<brands.length; i++){
+                if(specialPrices[0].item._id===brands[i]._id) {
+                    brands[i].price = specialPrices[0].price
+                    specialPrices.splice(0, 1)
+                    break
+                }
+            }
+        }
+    }
     return {
         data: {
-            brands: ctx.store.getState().user.profile.organization?(await getBrands({organization: ctx.store.getState().user.profile.organization, search: '', sort: '-priotiry'}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).brands:[],
-            organization: {},
-            client: ctx.query.client?(await getClient({_id: ctx.query.client}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).client:undefined,
-            ...await getBrandOrganizations({search: '', filter: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
+            brands,
+            organization: {_id: ctx.store.getState().user.profile.organization},
+            client,
+            ...await getBrandOrganizations({search: '', filter: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined),
+            normalPrices
         }
     };
 };

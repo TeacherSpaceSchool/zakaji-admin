@@ -45,7 +45,7 @@ export default async (ctx)=>{
     if(ctx.store.getState().user.profile.role&&ctx.store.getState().user.profile.role!=='admin')
         ctx.store.getState().app.city = ctx.store.getState().user.profile.city
     ctx.store.getState().app.organization = undefined
-    ctx.store.getState().app.agent = undefined
+    //ctx.store.getState().app.agent = undefined
     ctx.store.getState().app.date = ''
     ctx.store.getState().app.load = false
     ctx.store.getState().app.drawer = false

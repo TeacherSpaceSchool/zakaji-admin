@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux'
 import * as mini_dialogActions from '../../redux/actions/mini_dialog'
 import * as snackbarActions from '../../redux/actions/snackbar'
 import {getBrands} from '../../src/gql/items';
+import {getSpecialPriceClients} from '../../src/gql/specialPrice';
 import Router from 'next/router'
 import BuyBasket from '../../components/dialog/BuyBasket'
 import Image from '../../components/dialog/Image'
@@ -322,12 +323,24 @@ Catalog.getInitialProps = async function(ctx) {
     if(ctx.query.search){
         ctx.store.getState().app.search = ctx.query.search
     }
+    let brands = (await getBrands({organization: ctx.query.id, search: ctx.query.search?ctx.query.search:'', sort: ctx.store.getState().app.sort}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).brands
+    const specialPrices = await getSpecialPriceClients({client: ctx.store.getState().user.profile.client, organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
+    while(specialPrices.length) {
+        for(let i=0; i<brands.length; i++){
+            if(specialPrices[0].item._id===brands[i]._id) {
+                brands[i].price = specialPrices[0].price
+                specialPrices.splice(0, 1)
+                break
+            }
+        }
+    }
+
     return {
         data: {
+            brands,
             ...(ctx.store.getState().user.profile._id?await getClient({_id: ctx.store.getState().user.profile._id}, ctx.req?await getClientGqlSsr(ctx.req):undefined):{}),
             ...await getOrganization({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined),
-            ...await getBrands({organization: ctx.query.id, search: ctx.query.search?ctx.query.search:'', sort: ctx.store.getState().app.sort}, ctx.req?await getClientGqlSsr(ctx.req):undefined),
-            ...await getAdss({search: '', organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
+            ...await getAdss({search: '', organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined),
         }
     };
 };

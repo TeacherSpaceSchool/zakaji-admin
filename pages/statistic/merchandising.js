@@ -17,6 +17,7 @@ import TextField from '@material-ui/core/TextField';
 import { bindActionCreators } from 'redux'
 import * as appActions from '../../redux/actions/app'
 import Button from '@material-ui/core/Button';
+import { getAgents } from '../../src/gql/employment'
 
 const MerchandisingStatistic = React.memo((props) => {
     const classes = pageListStyle();
@@ -27,6 +28,8 @@ const MerchandisingStatistic = React.memo((props) => {
     let [activeOrganization, setActiveOrganization] = useState(data.activeOrganization);
     let [statisticMerchandising, setStatisticMerchandising] = useState(undefined);
     let [showStat, setShowStat] = useState(false);
+    let [agents, setAgents] = useState([]);
+    let [agent, setAgent] = useState({_id: undefined});
     let [organization, setOrganization] = useState(data.organization);
     let [dateStart, setDateStart] = useState(data.dateStart);
     let [dateType, setDateType] = useState('day');
@@ -38,16 +41,23 @@ const MerchandisingStatistic = React.memo((props) => {
                 organization: organization ? organization._id : undefined,
                 dateStart: dateStart ? dateStart : null,
                 dateType: dateType,
+                agent: agent?agent._id:undefined
             })).statisticMerchandising)
             await showLoad(false)
         })()
-    },[organization, dateStart, dateType, activeOrganization])
+    },[organization, dateStart, dateType, activeOrganization, agent])
     useEffect(()=>{
         if(process.browser){
             let appBody = document.getElementsByClassName('App-body')
             appBody[0].style.paddingBottom = '0px'
         }
     },[process.browser])
+    useEffect(()=>{
+        (async()=>{
+            setAgents(organization?(await getAgents({_id: organization._id?organization._id:'super'})).agents:[])
+            setAgent({_id: undefined})
+        })()
+    },[organization])
     useEffect(()=>{
         (async()=>{
             if(initialRender.current) {
@@ -57,6 +67,8 @@ const MerchandisingStatistic = React.memo((props) => {
                 await showLoad(true)
                 setOrganization(undefined)
                 setActiveOrganization((await getActiveOrganization(city)).activeOrganization)
+                setAgents((await getAgents({})).agents)
+                setAgent({_id: undefined})
                 await showLoad(false)
             }
         })()
@@ -93,7 +105,7 @@ const MerchandisingStatistic = React.memo((props) => {
                         {
                             profile.role === 'admin' ?
                                 <Autocomplete
-                                    className={classes.input}
+                                    className={agents&&agents.length?classes.inputThird:classes.input}
                                     options={[{name: 'AZYK.STORE', _id: undefined}, ...activeOrganization]}
                                     getOptionLabel={option => option.name}
                                     value={organization}
@@ -108,8 +120,26 @@ const MerchandisingStatistic = React.memo((props) => {
                                 :
                                 null
                         }
+                        {
+                            agents&&agents.length?
+                                <Autocomplete
+                                    className={profile.role === 'admin'?classes.inputThird:classes.input}
+                                    options={agents}
+                                    getOptionLabel={option => option.name}
+                                    value={agent}
+                                    onChange={(event, newValue) => {
+                                        setAgent(newValue)
+                                    }}
+                                    noOptionsText='Ничего не найдено'
+                                    renderInput={params => (
+                                        <TextField {...params} label='Агент' fullWidth />
+                                    )}
+                                />
+                                :
+                                null
+                        }
                         <TextField
-                            className={classes.input}
+                            className={agents&&agents.length&&profile.role === 'admin'?classes.inputThird:classes.input}
                             label='Дата начала'
                             type='date'
                             InputLabelProps={{
@@ -132,21 +162,24 @@ const MerchandisingStatistic = React.memo((props) => {
             <div className='count' onClick={()=>setShowStat(!showStat)}>
                 {
                     statisticMerchandising?
+                        !agent?
                         <>
-                        <div className={classes.rowStatic}>{`Средняя оценка: ${statisticMerchandising.row[0].data[0]}`}</div>
+                        <div className={classes.rowStatic}>{`Всего: ${statisticMerchandising.row[0].data[0]}`}</div>
                         {
                             showStat?
                                 <>
                                 <div className={classes.rowStatic}> {`Проверено: ${statisticMerchandising.row[0].data[1]}`}</div>
                                 <div className={classes.rowStatic}> {`Обработка: ${statisticMerchandising.row[0].data[2]}`}</div>
-                                <div className={classes.rowStatic}>{`Актуальные: ${statisticMerchandising.row[0].data[3]}`}</div>
-                                <div className={classes.rowStatic}>{`Текущие: ${statisticMerchandising.row[0].data[4]}`}</div>
-                                <div className={classes.rowStatic}>{`Просроченные: ${statisticMerchandising.row[0].data[5]}`}</div>
                                 </>
                                 :
                                 null
                         }
                         </>
+                            :
+                            <>
+                            <div className={classes.rowStatic}> {`Сделано: ${statisticMerchandising.row[0].data[0]}`}</div>
+                            <div className={classes.rowStatic}> {`Пропущено: ${statisticMerchandising.row[0].data[1]}`}</div>
+                            </>
                         :null
                 }
             </div>
@@ -156,7 +189,7 @@ const MerchandisingStatistic = React.memo((props) => {
 
 MerchandisingStatistic.getInitialProps = async function(ctx) {
     await initialApp(ctx)
-    if(!['admin', 'суперорганизация'].includes(ctx.store.getState().user.profile.role))
+    if(!['admin', 'суперорганизация',  'организация', 'менеджер'].includes(ctx.store.getState().user.profile.role))
         if(ctx.res) {
             ctx.res.writeHead(302, {
                 Location: '/contact'
@@ -167,6 +200,9 @@ MerchandisingStatistic.getInitialProps = async function(ctx) {
     let organization
     if(ctx.store.getState().user.profile.role==='admin')
         organization = {name: 'AZYK.STORE', _id: undefined}
+    else
+        organization = {_id: ctx.store.getState().user.profile.organization}
+
     let dateStart = new Date()
     if (dateStart.getHours()<3)
         dateStart.setDate(dateStart.getDate() - 1)

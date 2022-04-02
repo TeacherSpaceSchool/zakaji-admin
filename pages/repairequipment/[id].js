@@ -2,7 +2,8 @@ import Head from 'next/head';
 import React, { useState, useEffect, useRef } from 'react';
 import App from '../../layouts/App';
 import { connect } from 'react-redux'
-import {getRepairEquipment, setRepairEquipment, deleteRepairEquipment, addRepairEquipment, getEquipments} from '../../src/gql/equipment'
+import {getRepairEquipment, setRepairEquipment, deleteRepairEquipment, addRepairEquipment} from '../../src/gql/equipment'
+import { getClients } from '../../src/gql/client'
 import organizationStyle from '../../src/styleMUI/equipment/equipment'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -31,6 +32,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const RepairEquipment = React.memo((props) => {
@@ -40,26 +42,53 @@ const RepairEquipment = React.memo((props) => {
     const { isMobileApp, city } = props.app;
     const { showSnackBar } = props.snackbarActions;
     const initialRender = useRef(true);
+    const [clients, setClients] = useState([]);
+    const [inputValue, setInputValue] = React.useState('');
+    let [searchTimeOut, setSearchTimeOut] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        (async()=>{
+            if (inputValue.length < 3) {
+                setClients([]);
+                if (open)
+                    setOpen(false)
+                if (loading)
+                    setLoading(false)
+            }
+            else {
+                if (!loading)
+                    setLoading(true)
+                if (searchTimeOut)
+                    clearTimeout(searchTimeOut)
+                searchTimeOut = setTimeout(async () => {
+                    setClients((await getClients({search: inputValue, sort: '-name', filter: 'all', city})).clients)
+                    if (!open)
+                        setOpen(true)
+                    setLoading(false)
+                }, 500)
+                setSearchTimeOut(searchTimeOut)
+            }
+        })()
+    }, [inputValue]);
+    const handleChange = event => {
+        setInputValue(event.target.value);
+    };
+    let handleClient =  (client) => {
+        setClient(client)
+        setOpen(false)
+    };
     let [accept, setAccept] = useState(data.repairEquipment?data.repairEquipment.accept:false);
     let [done, setDone] = useState(data.repairEquipment?data.repairEquipment.done:false);
     let [cancel, setCancel] = useState(data.repairEquipment?data.repairEquipment.cancel:false);
-    let [equipments, setEquipments] = useState([]);
     let [activeOrganization, setActiveOrganization] = useState(data.activeOrganization);
     let [defect, setDefect] = useState(data.repairEquipment?data.repairEquipment.defect:[]);
     let [repair, setRepair] = useState(data.repairEquipment?data.repairEquipment.repair:[]);
     let [organization, setOrganization] = useState(data.repairEquipment!==null?data.repairEquipment.organization:undefined);
-    let [equipment, setEquipment] = useState(data.repairEquipment!==null?data.repairEquipment.equipment:undefined);
+    let [client, setClient] = useState(data.repairEquipment?data.repairEquipment.client:undefined);
+    let [equipment, setEquipment] = useState(data.repairEquipment?data.repairEquipment.equipment:undefined);
     let handleOrganization = async (organization) => {
         setOrganization(organization)
-    };
-    useEffect(()=>{
-        (async()=>{
-            if(organization)
-                setEquipments((await getEquipments({organization: organization._id, search: '', sort: '-createdAt'})).equipments)
-        })()
-    },[organization])
-    let handleEquipment =  (equipment) => {
-        setEquipment(equipment)
     };
     const { setMiniDialog, showMiniDialog } = props.mini_dialogActions;
     const router = useRouter()
@@ -125,43 +154,55 @@ const RepairEquipment = React.memo((props) => {
                         {
                             profile.role!=='ремонтник'&&!data.repairEquipment.accept&&!data.repairEquipment.cancel?
                                 <Autocomplete
+                                    onClose={()=>setOpen(false)}
+                                    open={open}
+                                    disableOpenOnFocus
                                     className={classes.input}
-                                    options={equipments}
-                                    getOptionLabel={option => `${option.name}, №${option.number}`}
-                                    value={equipment}
+                                    options={clients}
+                                    getOptionLabel={option => `${option.name}${option.address&&option.address[0]?` (${option.address[0][2]?`${option.address[0][2]}, `:''}${option.address[0][0]})`:''}`}
                                     onChange={(event, newValue) => {
-                                        handleEquipment(newValue)
+                                        handleClient(newValue)
                                     }}
+                                    value={client}
                                     noOptionsText='Ничего не найдено'
                                     renderInput={params => (
-                                        <TextField {...params} label='Выберите оборудование' fullWidth />
+                                        <TextField {...params} label='Выберите клиента' variant='outlined' fullWidth
+                                                   onChange={handleChange}
+                                                   InputProps={{
+                                                       ...params.InputProps,
+                                                       endAdornment: (
+                                                           <React.Fragment>
+                                                               {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                                               {params.InputProps.endAdornment}
+                                                           </React.Fragment>
+                                                       ),
+                                                   }}
+                                        />
                                     )}
                                 />
                                 :
                                 <TextField
-                                    label='Оборудование'
-                                    value={`${data.repairEquipment.equipment.name}, №${data.repairEquipment.equipment.number}`}
-                                    className={classes.input}
-                                    inputProps={{
-                                        'aria-label': 'description',
-                                        readOnly: true,
-                                    }}
-                                />
-                        }
-                        {
-                            data.repairEquipment.equipment&&data.repairEquipment.equipment.client?
-                                <TextField
                                     label='Клиент'
-                                    value={`${data.repairEquipment.equipment.client.name}${data.repairEquipment.equipment.client.address&&data.repairEquipment.equipment.client.address[0]?` (${data.repairEquipment.equipment.client.address[0][2]?`${data.repairEquipment.equipment.client.address[0][2]}, `:''}${data.repairEquipment.equipment.client.address[0][0]})`:''}`}
+                                    value={`${client.name}${client.address&&client.address[0]?` (${client.address[0][2]?`${client.address[0][2]}, `:''}${client.address[0][0]})`:''}`}
                                     className={classes.input}
                                     inputProps={{
                                         'aria-label': 'description',
                                         readOnly: true,
                                     }}
                                 />
-                                :
-                                null
                         }
+                        <TextField
+                            label='Оборудование'
+                            value={equipment}
+                            className={classes.input}
+                            onChange={(event)=>{
+                                if(profile.role!=='ремонтник'&&!data.repairEquipment.accept&&!data.repairEquipment.cancel)
+                                    setEquipment(event.target.value)
+                            }}
+                            inputProps={{
+                                'aria-label': 'description',
+                            }}
+                        />
                         {
                             data.repairEquipment.agent?
                                 <TextField
@@ -355,9 +396,9 @@ const RepairEquipment = React.memo((props) => {
                             {
                                 router.query.id==='new'?
                                     <Button onClick={async()=>{
-                                        if (defect.length>0&&equipment&&equipment._id) {
+                                        if (defect.length>0&&equipment&&client&&client._id) {
                                             const action = async() => {
-                                                let repairEquipment = {organization: organization._id, equipment: equipment._id, defect: defect}
+                                                let repairEquipment = {organization: organization._id, equipment, client: client._id, defect: defect}
                                                 await addRepairEquipment(repairEquipment)
                                                 Router.push(`/repairequipments/${organization&&organization._id?organization._id:profile.organization}`)
                                             }
@@ -378,9 +419,11 @@ const RepairEquipment = React.memo((props) => {
                                         if(cancel!==data.repairEquipment.cancel)editElement.cancel = cancel
                                         if(profile.role!=='ремонтник'&&!data.repairEquipment.accept&&!data.repairEquipment.cancel)editElement.defect = defect
                                         if(profile.role!=='ремонтник'&&!data.repairEquipment.accept&&!data.repairEquipment.cancel)editElement.equipment = equipment
+                                        if(profile.role!=='ремонтник'&&!data.repairEquipment.accept&&!data.repairEquipment.cancel&&client)editElement.client = client._id
                                         if(['admin', 'ремонтник'].includes(profile.role)&&!data.repairEquipment.done&&data.repairEquipment.accept)editElement.repair = repair
                                         const action = async() => {
                                             await setRepairEquipment(editElement)
+                                            router.reload()
                                         }
                                         setMiniDialog('Вы уверены?', <Confirmation action={action}/>)
                                         showMiniDialog(true)
@@ -392,7 +435,7 @@ const RepairEquipment = React.memo((props) => {
                                             <Button onClick={
                                                 async()=>{
                                                     const action = async() => {
-                                                        await deleteRepairEquipment([data.equipment._id])
+                                                        await deleteRepairEquipment([data.repairEquipment._id])
                                                         Router.push(`/repairequipments/${organization._id}`)
                                                     }
                                                     setMiniDialog('Вы уверены?', <Confirmation action={action}/>)

@@ -30,7 +30,7 @@ const Merchandisings = React.memo((props) => {
     let [paginationWork, setPaginationWork] = useState(true);
     const checkPagination = async()=>{
         if(paginationWork){
-            let addedList = (await getMerchandisings({...router.query.client?{client: router.query.client}:{}, date: date, organization: router.query.id, sort: sort, filter: filter, search: search, skip: list.length})).merchandisings
+            let addedList = (await getMerchandisings({...router.query.client?{client: router.query.client}:{}, agent, date: date, organization: router.query.id, sort: sort, filter: filter, search: search, skip: list.length})).merchandisings
             if(addedList.length>0){
                 setList([...list, ...addedList])
             }
@@ -85,7 +85,7 @@ const Merchandisings = React.memo((props) => {
                             )}
                     ):null
                 }
-                {['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент'].includes(profile.role)?
+                {['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент', 'мерчендайзер'].includes(profile.role)?
                     <Link href='/merchandising/[id]' as={`/merchandising/new`}>
                         <Fab color='primary' aria-label='add' className={classes.fab}>
                             <AddIcon/>
@@ -103,7 +103,7 @@ Merchandisings.getInitialProps = async function(ctx) {
     await initialApp(ctx)
     ctx.store.getState().app.sort = '-date'
     ctx.store.getState().app.organization = ctx.query.id
-    if(!['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент'].includes(ctx.store.getState().user.profile.role))
+    if(!['admin', 'суперагент', 'суперорганизация', 'организация', 'менеджер', 'агент', 'мерчендайзер'].includes(ctx.store.getState().user.profile.role))
         if(ctx.res) {
             ctx.res.writeHead(302, {
                 Location: '/contact'
@@ -113,7 +113,7 @@ Merchandisings.getInitialProps = async function(ctx) {
             Router.push('/contact')
     return {
         data: {
-            ...await getMerchandisings({...ctx.query.client?{client: ctx.query.client}:{}, organization: ctx.query.id, sort: ctx.store.getState().app.sort, filter: ctx.store.getState().app.filter, skip: 0, search: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined),
+            ...await getMerchandisings({...ctx.query.client?{client: ctx.query.client}:{}, organization: ctx.query.id, sort: ctx.store.getState().app.sort, agent: ctx.store.getState().app.agent, filter: ctx.store.getState().app.filter, skip: 0, search: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined),
         }
     };
 };

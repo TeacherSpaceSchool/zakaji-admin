@@ -205,6 +205,11 @@ const list = {
             role: ['admin', 'суперорганизация', 'организация', 'менеджер', 'агент']
         },
         {
+            name: 'Специальная цена',
+            link: '/statistic/specialpriceclient',
+            role: ['admin', 'суперорганизация', 'организация', 'менеджер', 'агент']
+        },
+        {
             name: 'Файловое хранилище',
             link: '/statistic/files',
             role: ['admin']
@@ -263,8 +268,8 @@ const list = {
         },
         {
             name: 'Принятая интеграции 1С',
-            link: '/statistic/receivedatas',
-            role: ['admin']
+            link: `/statistic/receivedatas`,
+            role: ['admin', 'суперорганизация', 'организация', 'менеджер']
         },
 
     ],

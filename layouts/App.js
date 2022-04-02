@@ -158,24 +158,22 @@ const App = React.memo(props => {
             }
     },[subscriptionOrderRes.data])
     useEffect(() => {
-        if(process.browser) {
-            router.beforePopState(() => {
-                if(show||showFull) {
-                    history.go(1)
-                    showMiniDialog(false)
-                    showFullDialog(false)
-                    return false
-                }
-                else
-                    return true
-            })
-            return () => {
-                router.beforePopState(() => {
-                    return true
-                })
+        router.beforePopState(() => {
+            if(show||showFull) {
+                history.go(1)
+                showMiniDialog(false)
+                showFullDialog(false)
+                return false
             }
+            else
+                return true
+        })
+        return () => {
+            router.beforePopState(() => {
+                return true
+            })
         }
-    }, [process.browser, show, showFull]);
+    }, [show, showFull]);
 
     return(
         <div ref={mainWindow} className='App'>

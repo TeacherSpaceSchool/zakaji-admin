@@ -25,6 +25,7 @@ const ReceiveData = React.memo((props) => {
     const classes = pageListStyle();
     const { data } = props;
     const { search, filter } = props.app;
+    const { profile } = props.user;
     const router = useRouter()
     let [list, setList] = useState(data.receivedDatas);
     useEffect(()=>{
@@ -62,23 +63,28 @@ const ReceiveData = React.memo((props) => {
                     </LazyLoad>
                 ):null}
             </div>
-            <Fab onClick={async()=>{
-                    const action = async() => {
-                        await clearAllReceivedDatas(router.query.id)
-                        setList([])
-                    }
-                    setMiniDialog('Вы уверены?', <Confirmation action={action}/>)
-                    showMiniDialog(true)
-                }} color='primary' aria-label='add' className={classes.fab}>
-                <RemoveIcon />
-            </Fab>
+            {
+                profile.role==='admin'?
+                    <Fab onClick={async()=>{
+                        const action = async() => {
+                            await clearAllReceivedDatas(router.query.id)
+                            setList([])
+                        }
+                        setMiniDialog('Вы уверены?', <Confirmation action={action}/>)
+                        showMiniDialog(true)
+                    }} color='primary' aria-label='add' className={classes.fab}>
+                        <RemoveIcon />
+                    </Fab>
+                    :
+                    null
+            }
         </App>
     )
 })
 
 ReceiveData.getInitialProps = async function(ctx) {
     await initialApp(ctx)
-    if(ctx.store.getState().user.profile.role!=='admin')
+    if(!['admin', 'суперорганизация', 'организация', 'менеджер'].includes(ctx.store.getState().user.profile.role))
         if(ctx.res) {
             ctx.res.writeHead(302, {
                 Location: '/contact'

@@ -20,7 +20,6 @@ import * as appActions from '../../redux/actions/app'
 import {checkInt} from '../../src/lib'
 
 const AgentHistoryGeo = React.memo((props) => {
-
     const classes = pageListStyle();
     const { data } = props;
     const { isMobileApp, date, city } = props.app;

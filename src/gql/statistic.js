@@ -35,15 +35,15 @@ export const getAgentMapGeos = async({agent, date}, client)=>{
     }
 }
 
-export const getStatisticMerchandising = async({organization, dateStart, dateType}, client)=>{
+export const getStatisticMerchandising = async({organization, dateStart, dateType, agent}, client)=>{
     try{
         client = client? client : new SingletonApolloClient().getClient()
         let res = await client
             .query({
-                variables: {organization, dateStart, dateType},
+                variables: {organization, dateStart, dateType, agent},
                 query: gql`
-                    query ($organization: ID, $dateStart: Date, $dateType: String, ) {
-                        statisticMerchandising(organization: $organization, dateStart: $dateStart, dateType: $dateType)  {
+                    query ($organization: ID, $dateStart: Date, $dateType: String, $agent: ID) {
+                        statisticMerchandising(organization: $organization, dateStart: $dateStart, dateType: $dateType, agent: $agent)  {
                             columns
                             row 
                                 {_id data}

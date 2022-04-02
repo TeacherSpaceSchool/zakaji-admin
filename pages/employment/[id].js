@@ -84,7 +84,7 @@ const Client = React.memo((props) => {
     const { setMiniDialog, showMiniDialog } = props.mini_dialogActions;
     const router = useRouter()
     const { logout } = props.userActions;
-    let roles = ['организация', 'менеджер', 'экспедитор', 'агент', 'ремонтник']
+    let roles = ['организация', 'менеджер', 'экспедитор', 'агент', 'ремонтник', 'мерчендайзер']
     if(profile.role==='admin')
         roles.push('суперорганизация')
     let superRoles = ['суперменеджер', 'суперагент', 'суперэкспедитор']
@@ -102,7 +102,7 @@ const Client = React.memo((props) => {
                 <meta property='og:description' content='Азык – это онлайн платформа для заказа товаров оптом, разработанная специально для малого и среднего бизнеса.  Она объединяет производителей и торговые точки напрямую, сокращая расходы и повышая продажи. Азык предоставляет своим пользователям мощные технологии для масштабирования и развития своего бизнеса.' />
                 <meta property='og:type' content='website' />
                 <meta property='og:image' content={`${urlMain}/static/512x512.png`} />
-                <meta property="og:url" content={`${urlMain}/employment/${router.query.id}`} />
+                <meta property='og:url' content={`${urlMain}/employment/${router.query.id}`} />
                 <link rel='canonical' href={`${urlMain}/employment/${router.query.id}`}/>
             </Head>
             <Card className={classes.page}>
@@ -155,7 +155,7 @@ const Client = React.memo((props) => {
                                                             'aria-label': 'description',
                                                         }}
                                                         endAdornment={
-                                                            <InputAdornment position="end">
+                                                            <InputAdornment position='end'>
                                                                 <IconButton
                                                                     onClick={()=>{
                                                                         deletePhone(idx)

@@ -59,17 +59,17 @@ const CardRepairEquipment = React.memo((props) => {
                                 Оборудование:&nbsp;
                             </div>
                             <div className={classes.value}>
-                                {`${element.equipment.name}, №${element.equipment.number}`}
+                                {element.equipment}
                             </div>
                         </div>
                         {
-                            element.equipment.client?
+                            element.client?
                                 <div className={classes.row}>
                                     <div className={classes.nameField}>
                                         Клиент:&nbsp;
                                     </div>
                                     <div className={classes.value}>
-                                        {`${element.equipment.client.name}${element.equipment.client.address&&element.equipment.client.address[0]?` (${element.equipment.client.address[0][2]?`${element.equipment.client.address[0][2]}, `:''}${element.equipment.client.address[0][0]})`:''}`}
+                                        {`${element.client.name}${element.client.address&&element.client.address[0]?` (${element.client.address[0][2]?`${element.client.address[0][2]}, `:''}${element.client.address[0][0]})`:''}`}
                                     </div>
                                 </div>
                                 :null
