@@ -59,7 +59,7 @@ const ReceiveData = React.memo((props) => {
                 </div>
                 {list?list.map((element, idx)=>
                     <LazyLoad scrollContainer={'.App-body'} key={element._id} height={height} offset={[height, 0]} debounce={0} once={true}  placeholder={<CardReceiveDataPlaceholder height={height}/>}>
-                        <CardReceiveData list={list} setList={setList} element={element} idx={idx}/>
+                        <CardReceiveData list={list} setList={setList} element={element} idx={idx} forceCheck={forceCheck}/>
                     </LazyLoad>
                 ):null}
             </div>

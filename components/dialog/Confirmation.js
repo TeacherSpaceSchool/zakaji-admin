@@ -20,15 +20,15 @@ const Confirmation =  React.memo(
         return (
             <div className={classes.line}>
                 <IconButton onClick={async()=>{
+                    await showMiniDialog(false)
+                    await showLoad(true)
                     try {
-                        await showMiniDialog(false)
-                        await showLoad(true)
                         await action()
-                        await showLoad(false)
                     }  catch (err) {
                         console.error(err)
                         showSnackBar('Ошибка')
                     }
+                    await showLoad(false)
                 }} aria-label='Delete'>
                     <Done className={classes.button} />
                 </IconButton>
