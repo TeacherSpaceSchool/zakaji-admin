@@ -29,7 +29,7 @@ const App = React.memo(props => {
     const { setIsMobileApp } = props.appActions;
     const { profile, authenticated } = props.user;
     const { load, search, showAppBar, filter } = props.app;
-    let { checkPagination, sorts, filters, pageName, dates, searchShow, setList, list, defaultOpenSearch, organizations, cityShow, agents } = props;
+    let { checkPagination, sorts, filters, pageName, dates, searchShow, setList, list, defaultOpenSearch, organizations, cityShow, agents, cities } = props;
     const { showFull, show  } = props.mini_dialog;
     const router = useRouter();
     const [unread, setUnread] = useState({});
@@ -174,14 +174,13 @@ const App = React.memo(props => {
             })
         }
     }, [show, showFull]);
-
     return(
         <div ref={mainWindow} className='App'>
             {
                 showAppBar?
                     <>
                     <Drawer unread={unread} setUnread={setUnread}/>
-                    <AppBar cityShow={cityShow} agents={agents} organizations={organizations} unread={unread} defaultOpenSearch={defaultOpenSearch} searchShow={searchShow} dates={dates} pageName={pageName} sorts={sorts} filters={filters}/>
+                    <AppBar cities={cities} cityShow={cityShow} agents={agents} organizations={organizations} unread={unread} defaultOpenSearch={defaultOpenSearch} searchShow={searchShow} dates={dates} pageName={pageName} sorts={sorts} filters={filters}/>
                     </>
                     :
                     null

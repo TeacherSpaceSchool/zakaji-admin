@@ -240,7 +240,7 @@ const AgentRoute = React.memo((props) => {
                             <br/>
                             <div className={classes.listInvoices}>
                                 {filtredClient?filtredClient.map((element, idx)=> {
-                                    if (idx <= pagination) {
+                                    if (idx <= pagination && element) {
                                         let selected = clients[dayWeek].includes(element._id)
                                         return (
                                             <div key={element._id} style={isMobileApp ? {alignItems: 'baseline'} : {}}

@@ -46,7 +46,7 @@ const MyAppBar = React.memo((props) => {
     //props
     const initialRender = useRef(true);
     const classes = appbarStyle();
-    const { filters, sorts, pageName, dates, searchShow, unread, defaultOpenSearch, organizations, cityShow, agents } = props
+    const { filters, sorts, pageName, dates, searchShow, unread, defaultOpenSearch, organizations, cityShow, agents, cities } = props
     const { drawer, search, filter, sort, isMobileApp, date, organization, agent, city } = props.app;
     const { showDrawer, setSearch, setFilter, setSort, setDate, setOrganization, setAgent, setCity } = props.appActions;
     const { authenticated, profile } = props.user;
@@ -397,7 +397,7 @@ const MyAppBar = React.memo((props) => {
                                             open={openCities}
                                             onClose={handleCloseCities}
                                         >
-                                            <MenuItem key='onCity' style={{background: city?'rgba(255, 179, 0, 0.15)': '#fff'}} onClick={async ()=>{setMiniDialog('Город', <SetCities/>);showMiniDialog(true);handleCloseCities();handleCloseMobileMenu();}}>
+                                            <MenuItem key='onCity' style={{background: city?'rgba(255, 179, 0, 0.15)': '#fff'}} onClick={async ()=>{setMiniDialog('Город', <SetCities cities={cities}/>);showMiniDialog(true);handleCloseCities();handleCloseMobileMenu();}}>
                                                 По городу
                                             </MenuItem>
                                             <MenuItem key='allCity' style={{background: !city?'rgba(255, 179, 0, 0.15)': '#fff'}} onClick={()=>{setCity(undefined);setCityCookie('');handleCloseCities();handleCloseMobileMenu();}}>
@@ -518,7 +518,7 @@ const MyAppBar = React.memo((props) => {
                                     open={openCities}
                                     onClose={handleCloseCities}
                                 >
-                                    <MenuItem style={{background: city?'rgba(255, 179, 0, 0.15)': '#fff'}} onClick={async ()=>{setMiniDialog('Город', <SetCities/>);showMiniDialog(true);handleCloseCities();}}>
+                                    <MenuItem style={{background: city?'rgba(255, 179, 0, 0.15)': '#fff'}} onClick={async ()=>{setMiniDialog('Город', <SetCities cities={cities}/>);showMiniDialog(true);handleCloseCities();}}>
                                         По городу
                                     </MenuItem>
                                     <MenuItem style={{background: !city?'rgba(255, 179, 0, 0.15)': '#fff'}} onClick={()=>{setCity(undefined);setCityCookie('');handleCloseCities();}}>

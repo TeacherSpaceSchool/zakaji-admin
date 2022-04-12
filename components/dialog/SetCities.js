@@ -13,19 +13,19 @@ import { setCityCookie } from '../../src/lib'
 
 const SetCities =  React.memo(
     (props) =>{
-        const { classes } = props;
+        const { classes, cities } = props;
         const { isMobileApp, city } = props.app;
         let [cityChange, setCityChange] = useState(city);
         const { showMiniDialog } = props.mini_dialogActions;
         const { setCity } = props.appActions;
         const width = isMobileApp? (window.innerWidth-112) : 500
-        const cities = ['Бишкек', 'Кара-Балта', 'Токмок', 'Кочкор', 'Нарын', 'Боконбаева', 'Каракол', 'Чолпон-Ата', 'Балыкчы', 'Казарман', 'Талас', 'Жалал-Абад', 'Ош', 'Москва']
+        const _cities = cities?cities:['Бишкек', 'Кара-Балта', 'Токмок', 'Кочкор', 'Нарын', 'Боконбаева', 'Каракол', 'Чолпон-Ата', 'Балыкчы', 'Казарман', 'Талас', 'Жалал-Абад', 'Ош', 'Москва']
         return (
             <div className={classes.main}>
                 <Autocomplete
                     style={{width: width}}
                     className={classes.textField}
-                    options={cities}
+                    options={_cities}
                     getOptionLabel={option => option}
                     value={cityChange}
                     onChange={(event, newValue) => {

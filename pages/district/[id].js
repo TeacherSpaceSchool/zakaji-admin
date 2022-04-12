@@ -90,9 +90,17 @@ const District = React.memo((props) => {
             if(initialRender.current) {
                 initialRender.current = false;
             } else {
-                setOrganizations((await getOrganizations({search: '', filter: '', city: city})).organizations)
-                setOrganization({})
-                setUnselectedClient([])
+                if(router.query.id==='new') {
+                    setOrganizations((await getOrganizations({search: '', filter: '', city: city})).organizations)
+                    setOrganization({})
+                    setUnselectedClient([])
+                }
+                else{
+                    if(city)
+                        setUnselectedClient((await getClientsWithoutDistrict({organization: organization._id, city})).clientsWithoutDistrict)
+                    else
+                        setUnselectedClient([])
+                }
             }
         })()
     },[city])
@@ -116,7 +124,7 @@ const District = React.memo((props) => {
                     setAgents((await getAgents({_id: organization._id})).agents)
                     setManagers((await getManagers({_id: organization._id})).managers)
                     setEcspeditors((await getEcspeditors({_id: organization._id})).ecspeditors)
-                    setUnselectedClient((await getClientsWithoutDistrict({organization: organization._id, city})).clientsWithoutDistrict)
+                    setUnselectedClient((await getClientsWithoutDistrict({organization: organization._id, city: city?city:data.district.organization.cities[0]})).clientsWithoutDistrict)
                 }
             }
         })()
@@ -165,7 +173,7 @@ const District = React.memo((props) => {
         })()
     },[filtredClient])
     return (
-        <App cityShow searchShow={true} checkPagination={checkPagination} pageName={data.district?router.query.id==='new'?'Добавить':data.district.name:'Ничего не найдено'}>
+        <App cityShow cities={router.query.id!=='new'&&data.district?data.district.organization.cities:null} searchShow={true} checkPagination={checkPagination} pageName={data.district?router.query.id==='new'?'Добавить':data.district.name:'Ничего не найдено'}>
             <Head>
                 <title>{data.district?router.query.id==='new'?'Добавить':data.district.name:'Ничего не найдено'}</title>
                 <meta name='description' content='Азык – это онлайн платформа для заказа товаров оптом, разработанная специально для малого и среднего бизнеса.  Она объединяет производителей и торговые точки напрямую, сокращая расходы и повышая продажи. Азык предоставляет своим пользователям мощные технологии для масштабирования и развития своего бизнеса.' />

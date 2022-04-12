@@ -59,7 +59,7 @@ export const getDistrict = async({_id}, client)=>{
                             _id
                             createdAt
                             organization
-                                {_id name}
+                                {_id name cities}
                             client
                                 { 
                                     _id
