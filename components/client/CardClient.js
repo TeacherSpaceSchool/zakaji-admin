@@ -17,7 +17,7 @@ import Confirmation from '../../components/dialog/Confirmation'
 import * as snackbarActions from '../../redux/actions/snackbar'
 import { addAgentHistoryGeo } from '../../src/gql/agentHistoryGeo'
 import {getGeoDistance} from '../../src/lib'
-
+import Router from 'next/router'
 
 const CardOrganization = React.memo((props) => {
     const classes = cardOrganizationStyle();
@@ -170,11 +170,13 @@ const CardOrganization = React.memo((props) => {
                 {
                     ['агент', 'суперагент'].includes(profile.role)&&buy ?
                         <>
-                        <Button onClick={async()=>{
-                            window.open(`/catalog?client=${element._id}`, '_blank');
-                        }} size='small' color='primary'>
-                            Купить
-                        </Button>
+                        <Link href={{pathname: '/catalog', query: { client: element._id }}}>
+                            <Button /*onClick={async()=>{
+                                window.open(`/catalog?client=${element._id}`, '_blank');
+                            }}*/ size='small' color='primary'>
+                                Купить
+                            </Button>
+                        </Link>
                         <Button onClick={async()=>{
                             const action = () => {
                                 if (navigator.geolocation&&element.address[0][1].includes(', ')) {
@@ -182,8 +184,8 @@ const CardOrganization = React.memo((props) => {
                                         let distance = getGeoDistance(position.coords.latitude, position.coords.longitude, ...(element.address[0][1].split(', ')))
                                         if(distance<1000){
                                             await addAgentHistoryGeo({client: element._id, geo: `${position.coords.latitude}, ${position.coords.longitude}`})
-                                            window.open(`/catalog?client=${element._id}`, '_blank');
-                                            //Router.push(`/catalog?client=${element._id}`)
+                                            //window.open(`/catalog?client=${element._id}`, '_blank');
+                                            Router.push(`/catalog?client=${element._id}`)
                                         }
                                         else
                                             showSnackBar('Вы слишком далеко')

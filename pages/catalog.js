@@ -491,7 +491,7 @@ Catalog.getInitialProps = async function(ctx) {
     }
     let client = ctx.query.client?(await getClient({_id: ctx.query.client}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).client:undefined
     if(ctx.store.getState().user.profile.organization&&ctx.query.client){
-        const specialPrices = await getSpecialPriceClients({client: ctx.store.getState().user.profile.client, organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
+        const specialPrices = await getSpecialPriceClients({client: ctx.query.client, organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
         while(specialPrices.length) {
             for(let i=0; i<brands.length; i++){
                 if(specialPrices[0].item._id===brands[i]._id) {

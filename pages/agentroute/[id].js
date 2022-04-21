@@ -108,9 +108,8 @@ const AgentRoute = React.memo((props) => {
                     allClient=[...district.client]
                 else if (selectType == 'Свободные')
                     allClient=district.client.filter(client=>!clients[dayWeek].includes(client._id))
-                else if (selectType == 'Выбраные') {
+                else if (selectType == 'Выбраные')
                     allClient = clients[dayWeek].map(client=>district.client.find(client1=>client1._id===client))
-                }
                 let filtredClient = [...allClient]
                 if(search.length>0)
                     filtredClient = filtredClient.filter(element=>
