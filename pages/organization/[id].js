@@ -47,6 +47,7 @@ const Organization = React.memo((props) => {
     let [onlyIntegrate, setOnlyIntegrate] = useState(data.organization&&data.organization.onlyIntegrate!==null?data.organization.onlyIntegrate:false);
     let [addedClient, setAddedClient] = useState(data.organization&&data.organization.addedClient!==null?data.organization.addedClient:false);
     let [autoAccept, setAutoAccept] = useState(data.organization&&data.organization.autoAccept!==null?data.organization.autoAccept:false);
+    let [dateDelivery, setDateDelivery] = useState(data.organization&&data.organization.dateDelivery!==null?data.organization.dateDelivery:false);
     let [warehouse, setWarehouse] = useState(data.organization&&data.organization.warehouse!==null?data.organization.warehouse:'');
     let [consignation, setConsignation] = useState(data.organization&&data.organization.consignation!==null?data.organization.consignation:false);
     let [minimumOrder, setMinimumOrder] = useState(data.organization!==null?data.organization.minimumOrder:0);
@@ -228,6 +229,17 @@ const Organization = React.memo((props) => {
                                                     />
                                                 }
                                                 label='Автоприем заказов'
+                                            />
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        checked={dateDelivery}
+                                                        onChange={()=>{setDateDelivery(!dateDelivery)}}
+                                                        color="primary"
+                                                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                                                    />
+                                                }
+                                                label='Дата доставки'
                                             />
                                             <FormControlLabel
                                                 control={
@@ -452,7 +464,7 @@ const Organization = React.memo((props) => {
                                                 <Button onClick={async()=>{
                                                     if (cities.length>0&&image!==undefined&&name.length>0&&email.length>0&&address.length>0&&phone.length>0&&info.length>0) {
                                                         const action = async() => {
-                                                            await addOrganization({catalog, cities: cities, pass: pass, miniInfo: miniInfo, priotiry: checkInt(priotiry),consignation: consignation, onlyDistrict: onlyDistrict, unite: unite, superagent: superagent, onlyIntegrate: onlyIntegrate, addedClient: addedClient, autoAccept: autoAccept, warehouse: warehouse, accessToClient: accessToClient, image: image, name: name, address: address, email: email, phone: phone, info: info, minimumOrder: checkInt(minimumOrder)})
+                                                            await addOrganization({catalog, cities: cities, pass: pass, miniInfo: miniInfo, priotiry: checkInt(priotiry),consignation: consignation, onlyDistrict: onlyDistrict, unite: unite, superagent: superagent, onlyIntegrate: onlyIntegrate, addedClient: addedClient, autoAccept: autoAccept, dateDelivery, warehouse: warehouse, accessToClient: accessToClient, image: image, name: name, address: address, email: email, phone: phone, info: info, minimumOrder: checkInt(minimumOrder)})
                                                             Router.push('/organizations')
                                                         }
                                                         setMiniDialog('Вы уверены?', <Confirmation action={action}/>)
@@ -483,6 +495,7 @@ const Organization = React.memo((props) => {
                                                     if(onlyIntegrate!==data.organization.onlyIntegrate)editElement.onlyIntegrate = onlyIntegrate
                                                     if(addedClient!==data.organization.addedClient)editElement.addedClient = addedClient
                                                     if(autoAccept!==data.organization.autoAccept)editElement.autoAccept = autoAccept
+                                                    if(dateDelivery!==data.organization.dateDelivery)editElement.dateDelivery = dateDelivery
                                                     if(warehouse!==data.organization.warehouse)editElement.warehouse = warehouse
                                                     if(consignation!==data.organization.consignation)editElement.consignation = consignation
                                                     if(minimumOrder!==data.organization.minimumOrder)editElement.minimumOrder = checkInt(minimumOrder)
@@ -631,7 +644,7 @@ Organization.getInitialProps = async function(ctx) {
             Router.push('/contact')
     return {
         data: {
-            ...ctx.query.id!=='new'?await getOrganization({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined):{organization:{name: '',image: '/static/add.png',address: [],email: [],phone: [],info: '',miniInfo: '',priotiry: 0,minimumOrder: 0,consignation: false,accessToClient: false, onlyDistrict: false, onlyIntegrate: false, addedClient: false, autoAccept: false, warehouse: ''}}
+            ...ctx.query.id!=='new'?await getOrganization({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined):{organization:{name: '',image: '/static/add.png',address: [],email: [],phone: [],info: '',miniInfo: '',priotiry: 0,minimumOrder: 0,consignation: false,accessToClient: false, onlyDistrict: false, onlyIntegrate: false, addedClient: false, autoAccept: false, dateDelivery: false, warehouse: ''}}
         }
 
     };
