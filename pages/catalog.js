@@ -51,15 +51,14 @@ const Catalog = React.memo((props) => {
                 normalPrices[list[i]._id] = list[i].price
             }
             if(client){
-                const specialPrices = await getSpecialPriceClients({client: client._id, organization: organization._id})
-                while(specialPrices.length) {
-                    for(let i=0; i<list.length; i++){
-                        if(specialPrices[0].item._id===list[i]._id) {
-                            list[i].price = specialPrices[0].price
-                            specialPrices.splice(0, 1)
-                            break
-                        }
-                    }
+                const _specialPrices = await getSpecialPriceClients({client: client._id, organization: organization._id})
+                const specialPrices = {}
+                for(let i=0; i<_specialPrices.length; i++){
+                    specialPrices[_specialPrices[i].item._id] = _specialPrices[i].price
+                }
+                for(let i=0; i<list.length; i++){
+                    if(specialPrices[list[i]._id]!=undefined)
+                        list[i].price = specialPrices[list[i]._id]
                 }
             }
             setList([...list]);
@@ -161,15 +160,14 @@ const Catalog = React.memo((props) => {
                 list[i].price = normalPrices[list[i]._id]
         }
         if(client&&organization&&organization._id){
-            const specialPrices = await getSpecialPriceClients({client: client._id, organization: organization._id})
-            while(specialPrices.length) {
-                for(let i=0; i<list.length; i++){
-                    if(specialPrices[0].item._id===list[i]._id) {
-                        list[i].price = specialPrices[0].price
-                        specialPrices.splice(0, 1)
-                        break
-                    }
-                }
+            const _specialPrices = await getSpecialPriceClients({client: client._id, organization: organization._id})
+            const specialPrices = {}
+            for(let i=0; i<_specialPrices.length; i++){
+                specialPrices[_specialPrices[i].item._id] = _specialPrices[i].price
+            }
+            for(let i=0; i<list.length; i++){
+                if(specialPrices[list[i]._id]!=undefined)
+                    list[i].price = specialPrices[list[i]._id]
             }
         }
         setList([...list]);
@@ -491,15 +489,14 @@ Catalog.getInitialProps = async function(ctx) {
     }
     let client = ctx.query.client?(await getClient({_id: ctx.query.client}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).client:undefined
     if(ctx.store.getState().user.profile.organization&&ctx.query.client){
-        const specialPrices = await getSpecialPriceClients({client: ctx.query.client, organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
-        while(specialPrices.length) {
-            for(let i=0; i<brands.length; i++){
-                if(specialPrices[0].item._id===brands[i]._id) {
-                    brands[i].price = specialPrices[0].price
-                    specialPrices.splice(0, 1)
-                    break
-                }
-            }
+        const _specialPrices = await getSpecialPriceClients({client: ctx.query.client, organization: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)
+        const specialPrices = {}
+        for(let i=0; i<_specialPrices.length; i++){
+            specialPrices[_specialPrices[i].item._id] = _specialPrices[i].price
+        }
+        for(let i=0; i<brands.length; i++){
+            if(specialPrices[brands[i]._id]!=undefined)
+                brands[i].price = specialPrices[brands[i]._id]
         }
     }
     return {

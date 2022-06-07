@@ -120,7 +120,9 @@ export function signin(payload) {
                     payload: false
                 })
                 //await Router.push('/contact')
+                let reloadTimeout = setTimeout(()=>window.location.reload(), 30000)
                 await register(true)
+                clearInterval(reloadTimeout)
                 window.location.reload()
 
                 /*await dispatch({type: AUTHENTICATED});
