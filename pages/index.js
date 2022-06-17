@@ -135,6 +135,14 @@ const Organization = React.memo((props) => {
                     :
                     null
             */}
+            {
+                profile.role==='client'?
+                    <div className={classes.shorobanDiv}>
+                        <img className={classes.shoroban} src={`${urlMain}/static/шоробан.png`}/>
+                    </div>
+                    :
+                    null
+            }
             <div className={classes.page}>
                 {list?list.map((element, idx)=> {
                     if(idx<pagination)

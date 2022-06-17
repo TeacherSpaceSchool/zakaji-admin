@@ -1,6 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
+    shorobanDiv: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    shoroban: {
+        width: '100%',
+        maxWidth: 800
+    },
     page: {
         paddingTop: 10,
         display: 'flex',
