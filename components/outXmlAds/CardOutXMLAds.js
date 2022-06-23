@@ -6,7 +6,7 @@ import cardPageListStyle from '../../src/styleMUI/blog/cardBlog'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
-import { deleteOutXMLAdsShoro, addOutXMLAdsShoro, setOutXMLAdsShoro } from '../../src/gql/outxmladsazyk'
+import { deleteOutXMLAdsShoro, addOutXMLAdsShoro, setOutXMLAdsShoro } from '../../src/gql/outxmladszakaji'
 import TextField from '@material-ui/core/TextField';
 import { bindActionCreators } from 'redux'
 import * as mini_dialogActions from '../../redux/actions/mini_dialog'

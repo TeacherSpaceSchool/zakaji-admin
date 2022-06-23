@@ -62,7 +62,7 @@ const Autos = React.memo((props) => {
                     profile.role==='admin'?
                         <Link href='/autos/[id]' as='/autos/super'>
                             <a>
-                                <CardOrganization element={{name: 'AZYK.STORE', image: '/static/512x512.png'}}/>
+                                <CardOrganization element={{name: 'ZAKAJI.KG', image: '/static/512x512.png'}}/>
                             </a>
                         </Link>
                         :null

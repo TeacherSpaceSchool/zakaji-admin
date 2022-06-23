@@ -46,7 +46,7 @@ const Geo =  React.memo(
                             >
                                 <Placemark
                                     onDragEnd={dragend}
-                                    options={{draggable: true, iconColor: '#ffb300'}}
+                                    options={{draggable: true, iconColor: '#004C3F'}}
                                     properties={{iconCaption: name}}
                                     geometry={newGeo.split(', ')} />
                             </Map>

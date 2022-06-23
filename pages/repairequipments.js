@@ -60,7 +60,7 @@ const RepairEquipments = React.memo((props) => {
                     profile.role==='admin'?
                         <Link href='/repairequipments/[id]' as='/repairequipments/super'>
                             <a>
-                                <CardOrganization element={{name: 'AZYK.STORE', image: '/static/512x512.png'}}/>
+                                <CardOrganization element={{name: 'ZAKAJI.KG', image: '/static/512x512.png'}}/>
                             </a>
                         </Link>
                         :null

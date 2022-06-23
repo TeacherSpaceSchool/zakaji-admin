@@ -253,7 +253,7 @@ const Organization = React.memo((props) => {
                                                 label='Добавлять клиентов'
                                             />
                                             <br/>
-                                            <div className={classes.geo} style={{color: warehouse&&warehouse.length>0?'#ffb300':'red'}} onClick={()=>{
+                                            <div className={classes.geo} style={{color: warehouse&&warehouse.length>0?'#004C3F':'red'}} onClick={()=>{
                                                 setFullDialog('Геолокация', <Geo change={true} geo={warehouse} setAddressGeo={setWarehouse}/>)
                                                 showFullDialog(true)
                                             }}>

@@ -154,7 +154,7 @@ const LogistiOorder = React.memo((props) => {
             else {
                 await showLoad(true)
                 setForwarder(undefined)
-                setActiveOrganization([{name: 'AZYK.STORE', _id: 'super'},
+                setActiveOrganization([{name: 'ZAKAJI.KG', _id: 'super'},
                     ...(await getActiveOrganization(city)).activeOrganization])
                 await showLoad(false)
             }
@@ -276,13 +276,13 @@ const LogistiOorder = React.memo((props) => {
                                             setSelectedClients([...selectedClients])
                                         }}
                                     />
-                                    <div className={classes.dateStatistic} style={{background: deliveryDate[0]?'#ffb300':'white'}}/>
-                                    <div className={classes.dateStatistic} style={{background: deliveryDate[1]?'#ffb300':'white'}}/>
-                                    <div className={classes.dateStatistic} style={{background: deliveryDate[2]?'#ffb300':'white'}}/>
-                                    <div className={classes.dateStatistic} style={{background: deliveryDate[3]?'#ffb300':'white'}}/>
-                                    <div className={classes.dateStatistic} style={{background: deliveryDate[4]?'#ffb300':'white'}}/>
-                                    <div className={classes.dateStatistic} style={{background: deliveryDate[5]?'#ffb300':'white'}}/>
-                                    <div className={classes.dateStatistic} style={{background: deliveryDate[6]?'#ffb300':'white'}}/>
+                                    <div className={classes.dateStatistic} style={{background: deliveryDate[0]?'#004C3F':'white'}}/>
+                                    <div className={classes.dateStatistic} style={{background: deliveryDate[1]?'#004C3F':'white'}}/>
+                                    <div className={classes.dateStatistic} style={{background: deliveryDate[2]?'#004C3F':'white'}}/>
+                                    <div className={classes.dateStatistic} style={{background: deliveryDate[3]?'#004C3F':'white'}}/>
+                                    <div className={classes.dateStatistic} style={{background: deliveryDate[4]?'#004C3F':'white'}}/>
+                                    <div className={classes.dateStatistic} style={{background: deliveryDate[5]?'#004C3F':'white'}}/>
+                                    <div className={classes.dateStatistic} style={{background: deliveryDate[6]?'#004C3F':'white'}}/>
                                     <b>
                                         {priority}
                                     </b>
@@ -389,7 +389,7 @@ LogistiOorder.getInitialProps = async function(ctx) {
             Router.push('/contact')
     return {
         data: {
-            activeOrganization: [{name: 'AZYK.STORE', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]
+            activeOrganization: [{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]
         }
     };
 };

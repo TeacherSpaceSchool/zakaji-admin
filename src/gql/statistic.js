@@ -140,7 +140,7 @@ export const getStatisticSubBrand = async({company, dateStart, dateType, online,
     }
 }
 
-export const getStatisticAzykStoreOrder = async({company, dateStart, dateType, filter, city}, client)=>{
+export const getStatisticZakajiOrder = async({company, dateStart, dateType, filter, city}, client)=>{
     try{
         client = client? client : new SingletonApolloClient().getClient()
         let res = await client
@@ -148,7 +148,7 @@ export const getStatisticAzykStoreOrder = async({company, dateStart, dateType, f
                 variables: {company, dateStart, dateType, filter, city},
                 query: gql`
                     query ($company: ID, $dateStart: Date, $dateType: String, $filter: String, $city: String) {
-                        statisticAzykStoreOrder(company: $company, dateStart: $dateStart, dateType: $dateType, filter: $filter, city: $city) {
+                        statisticZakajiOrder(company: $company, dateStart: $dateStart, dateType: $dateType, filter: $filter, city: $city) {
                             columns
                             row 
                                 {_id data}
@@ -161,7 +161,7 @@ export const getStatisticAzykStoreOrder = async({company, dateStart, dateType, f
     }
 }
 
-export const getStatisticAzykStoreAgents = async({company, dateStart, dateType, filter, city}, client)=>{
+export const getStatisticZakajiAgents = async({company, dateStart, dateType, filter, city}, client)=>{
     try{
         client = client? client : new SingletonApolloClient().getClient()
         let res = await client
@@ -169,7 +169,7 @@ export const getStatisticAzykStoreAgents = async({company, dateStart, dateType, 
                 variables: {company, dateStart, dateType, filter, city},
                 query: gql`
                     query ($company: ID, $dateStart: Date, $dateType: String, $filter: String, $city: String) {
-                        statisticAzykStoreAgents(company: $company, dateStart: $dateStart, dateType: $dateType, filter: $filter, city: $city) {
+                        statisticZakajiAgents(company: $company, dateStart: $dateStart, dateType: $dateType, filter: $filter, city: $city) {
                             columns
                             row 
                                 {_id data}
@@ -182,7 +182,7 @@ export const getStatisticAzykStoreAgents = async({company, dateStart, dateType, 
     }
 }
 
-export const getStatisticAzykStoreAgent = async({agent, dateStart, dateType}, client)=>{
+export const getStatisticZakajiAgent = async({agent, dateStart, dateType}, client)=>{
     try{
         client = client? client : new SingletonApolloClient().getClient()
         let res = await client
@@ -190,7 +190,7 @@ export const getStatisticAzykStoreAgent = async({agent, dateStart, dateType}, cl
                 variables: {agent: agent, dateStart: dateStart, dateType: dateType},
                 query: gql`
                     query ($agent: ID!, $dateStart: Date, $dateType: String) {
-                        statisticAzykStoreAgent(agent: $agent, dateStart: $dateStart, dateType: $dateType) {
+                        statisticZakajiAgent(agent: $agent, dateStart: $dateStart, dateType: $dateType) {
                             columns
                             row 
                                 {_id data}

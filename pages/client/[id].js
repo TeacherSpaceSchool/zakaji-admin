@@ -245,7 +245,7 @@ const Client = React.memo((props) => {
                                                         }}
                                                     />
                                                 </FormControl>
-                                                <div className={classes.geo} style={{color: element[1]?'#ffb300':'red'}} onClick={()=>{
+                                                <div className={classes.geo} style={{color: element[1]?'#004C3F':'red'}} onClick={()=>{
                                                     setFullDialog('Геолокация', <Geo change={true} geo={element[1]} setAddressGeo={setAddressGeo} idx={idx}/>)
                                                     showFullDialog(true)
                                                 }}>
@@ -436,7 +436,7 @@ const Client = React.memo((props) => {
                                                 <div className={classes.value}>
                                                     {`${element[2]?`${element[2]}, `:''}${element[0]}`}
                                                 </div>
-                                                <div className={classes.geo} style={{color: element[1]?'#ffb300':'red'}} onClick={()=>{
+                                                <div className={classes.geo} style={{color: element[1]?'#004C3F':'red'}} onClick={()=>{
                                                     if(element[1]) {
                                                         setFullDialog('Геолокация', <Geo geo={element[1]}/>)
                                                         showFullDialog(true)

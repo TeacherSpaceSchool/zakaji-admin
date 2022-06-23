@@ -34,7 +34,7 @@ const UnloadingIntegrate1C = React.memo((props) => {
             }
             else {
                 setOrganization(undefined)
-                setActiveOrganization([{name: 'AZYK.STORE', _id: 'super'}, ...(await getActiveOrganization(city)).activeOrganization])
+                setActiveOrganization([{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getActiveOrganization(city)).activeOrganization])
             }
         })()
     },[city])
@@ -128,7 +128,7 @@ UnloadingIntegrate1C.getInitialProps = async function(ctx) {
     return {
         data:
             {
-                activeOrganization: [{name: 'AZYK.STORE', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]
+                activeOrganization: [{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]
             }
     }
 };

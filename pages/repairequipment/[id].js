@@ -473,7 +473,7 @@ RepairEquipment.getInitialProps = async function(ctx) {
     return {
         data: {
             ...ctx.query.id!=='new'?await getRepairEquipment({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined):{repairEquipment:{defect: [],repair: [],equipment: undefined,organization: undefined}},
-            activeOrganization: ctx.store.getState().user.profile.organization?[]:[{name: 'AZYK.STORE', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization],
+            activeOrganization: ctx.store.getState().user.profile.organization?[]:[{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization],
         }
     };
 };

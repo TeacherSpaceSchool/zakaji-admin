@@ -66,10 +66,10 @@ const AddOrder =  React.memo(
         return (
             <div ref={containerRef} className={classes.column}>
                 <div style={{ justifyContent: 'center' }} className={classes.row}>
-                    <div style={{background: screen==='setting'?'#ffb300':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('setting')}} className={classes.selectType}>
+                    <div style={{background: screen==='setting'?'#004C3F':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('setting')}} className={classes.selectType}>
                         Настройки
                     </div>
-                    <div style={{background: screen==='invoices'?'#ffb300':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('invoices')}} className={classes.selectType}>
+                    <div style={{background: screen==='invoices'?'#004C3F':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('invoices')}} className={classes.selectType}>
                         Заказы {orders.length}
                     </div>
                 </div>

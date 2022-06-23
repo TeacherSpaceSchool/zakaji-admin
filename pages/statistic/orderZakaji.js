@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import App from '../../layouts/App';
 import { connect } from 'react-redux'
 import pageListStyle from '../../src/styleMUI/statistic/statistic'
@@ -11,55 +11,70 @@ import initialApp from '../../src/initialApp'
 import Table from '../../components/app/Table'
 import { getClientGqlSsr } from '../../src/getClientGQL'
 import { pdDatePicker } from '../../src/lib'
-import { getStatisticAzykStoreAgent } from '../../src/gql/statistic'
-import { getAgents } from '../../src/gql/employment'
+import { getStatisticZakajiOrder, getSuperagentOrganization } from '../../src/gql/statistic'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { bindActionCreators } from 'redux'
 import * as appActions from '../../redux/actions/app'
 
-const AzykStoreStatistic = React.memo((props) => {
+const ZakajiStatistic = React.memo((props) => {
 
     const classes = pageListStyle();
     const { data } = props;
-    const { isMobileApp } = props.app;
+    const { isMobileApp, filter, city } = props.app;
+    const initialRender = useRef(true);
+    let [superagentOrganization, setSuperagentOrganization] = useState(data.superagentOrganization);
     let [dateStart, setDateStart] = useState(data.dateStart);
     let [dateType, setDateType] = useState('day');
     let [statisticOrder, setStatisticOrder] = useState(undefined);
     let [showStat, setShowStat] = useState(false);
-    let [agent, setAgent] = useState(undefined);
+    let [organization, setOrganization] = useState(undefined);
     const { showLoad } = props.appActions;
     useEffect(()=>{
         (async()=>{
-            if(agent) {
-                await showLoad(true)
-                setStatisticOrder((await getStatisticAzykStoreAgent({
-                    agent: agent._id,
-                    dateStart: dateStart ? dateStart : null,
-                    dateType: dateType,
-                })).statisticAzykStoreAgent)
-                await showLoad(false)
-            }
+            await showLoad(true)
+            setStatisticOrder((await getStatisticZakajiOrder({
+                ...organization?{company: organization._id}:{},
+                dateStart: dateStart ? dateStart : null,
+                dateType: dateType,
+                filter: filter,
+                city: city
+            })).statisticZakajiOrder)
+            await showLoad(false)
         })()
-    },[agent, dateStart, dateType])
+    },[organization, dateStart, dateType, filter, superagentOrganization])
     useEffect(()=>{
         if(process.browser){
             let appBody = document.getElementsByClassName('App-body')
             appBody[0].style.paddingBottom = '0px'
         }
     },[process.browser])
+    const filters = [{name: 'Район', value: 'район'}, {name: 'Организация', value: 'организация'},]
+    useEffect(()=>{
+        (async()=>{
+            if(initialRender.current) {
+                initialRender.current = false;
+            }
+            else {
+                await showLoad(true)
+                setOrganization(undefined)
+                setSuperagentOrganization((await getSuperagentOrganization(city)).superagentOrganization)
+                await showLoad(false)
+            }
+        })()
+    },[city])
     return (
-        <App pageName='Статистика агента AZYK.STORE'>
+        <App cityShow pageName='Статистика заказов ZAKAJI.KG' filters={filters}>
             <Head>
-                <title>Статистика агента AZYK.STORE</title>
+                <title>Статистика заказов ZAKAJI.KG</title>
                 <meta name='description' content='Азык – это онлайн платформа для заказа товаров оптом, разработанная специально для малого и среднего бизнеса.  Она объединяет производителей и торговые точки напрямую, сокращая расходы и повышая продажи. Азык предоставляет своим пользователям мощные технологии для масштабирования и развития своего бизнеса.' />
-                <meta property='og:title' content='Статистика агента AZYK.STORE' />
+                <meta property='og:title' content='Статистика заказов ZAKAJI.KG' />
                 <meta property='og:description' content='Азык – это онлайн платформа для заказа товаров оптом, разработанная специально для малого и среднего бизнеса.  Она объединяет производителей и торговые точки напрямую, сокращая расходы и повышая продажи. Азык предоставляет своим пользователям мощные технологии для масштабирования и развития своего бизнеса.' />
                 <meta property='og:type' content='website' />
                 <meta property='og:image' content={`${urlMain}/static/512x512.png`} />
-                <meta property='og:url' content={`${urlMain}/statistic/agentAzykStore`} />
-                <link rel='canonical' href={`${urlMain}/statistic/agentAzykStore`}/>
+                <meta property='og:url' content={`${urlMain}/statistic/orderZakaji`} />
+                <link rel='canonical' href={`${urlMain}/statistic/orderZakaji`}/>
             </Head>
             <Card className={classes.page}>
                 <CardContent className={classes.column} style={isMobileApp?{}:{justifyContent: 'start', alignItems: 'flex-start'}}>
@@ -80,15 +95,15 @@ const AzykStoreStatistic = React.memo((props) => {
                     <div className={classes.row}>
                         <Autocomplete
                             className={classes.input}
-                            options={data.agents}
+                            options={superagentOrganization}
                             getOptionLabel={option => option.name}
-                            value={agent}
+                            value={organization}
                             onChange={(event, newValue) => {
-                                setAgent(newValue)
+                                setOrganization(newValue)
                             }}
                             noOptionsText='Ничего не найдено'
                             renderInput={params => (
-                                <TextField {...params} label='агент' fullWidth/>
+                                <TextField {...params} label='Организация' fullWidth/>
                             )}
                         />
                         <TextField
@@ -120,7 +135,7 @@ const AzykStoreStatistic = React.memo((props) => {
                         {
                             showStat?
                                 <>
-                                <div className={classes.rowStatic}>{`Выручка: ${statisticOrder.row[0].data[1]} сом`}</div>
+                                <div className={classes.rowStatic}> {`Выручка: ${statisticOrder.row[0].data[1]} сом`}</div>
                                 <div className={classes.rowStatic}>{`Выполнено: ${statisticOrder.row[0].data[2]} шт`}</div>
                                 <div className={classes.rowStatic}>{`Отказов: ${statisticOrder.row[0].data[3]} сом`}</div>
                                 <div className={classes.rowStatic}>{`Конс: ${statisticOrder.row[0].data[4]} сом`}</div>
@@ -137,8 +152,9 @@ const AzykStoreStatistic = React.memo((props) => {
     )
 })
 
-AzykStoreStatistic.getInitialProps = async function(ctx) {
+ZakajiStatistic.getInitialProps = async function(ctx) {
     await initialApp(ctx)
+    ctx.store.getState().app.filter = 'организация'
     if(!['admin'].includes(ctx.store.getState().user.profile.role))
         if(ctx.res) {
             ctx.res.writeHead(302, {
@@ -152,7 +168,7 @@ AzykStoreStatistic.getInitialProps = async function(ctx) {
         dateStart.setDate(dateStart.getDate() - 1)
     return {
         data: {
-            ...await getAgents({_id: 'super'}, ctx.req?await getClientGqlSsr(ctx.req):undefined),
+            ...await getSuperagentOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined),
             dateStart: pdDatePicker(dateStart)
         }
     };
@@ -173,4 +189,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AzykStoreStatistic);
+export default connect(mapStateToProps, mapDispatchToProps)(ZakajiStatistic);

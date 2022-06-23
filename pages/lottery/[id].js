@@ -76,7 +76,7 @@ const LotteryEdit = React.memo((props) => {
     useEffect(()=>{
         let black = true
         let countdownRef = setInterval(() => {
-            setColor(black?'#ffb300':'#000000')
+            setColor(black?'#004C3F':'#000000')
             black = !black
         }, 1000)
         return ()=>{

@@ -136,7 +136,7 @@ const Form = React.memo((props) => {
                                 {
                                     client?
                                         <a href={`/client/${client._id}`} target='_blank'>
-                                            <div className={classes.geo} style={{color: '#ffb300'}}>
+                                            <div className={classes.geo} style={{color: '#004C3F'}}>
                                                 Посмотреть клиента
                                             </div>
                                         </a>

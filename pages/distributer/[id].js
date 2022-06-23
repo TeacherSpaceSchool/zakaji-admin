@@ -39,7 +39,7 @@ const Distributer = React.memo((props) => {
         }
     }
     let [allOrganizations, setAllOrganizations] = useState(data.organizations);
-    const organization = router.query.id==='super'?{name: 'AZYK.STORE', _id: 'super'}:data.organization
+    const organization = router.query.id==='super'?{name: 'ZAKAJI.KG', _id: 'super'}:data.organization
     let [sales, setSales] = useState(data.distributer?data.distributer.sales:[]);
     let [provider, setProvider] = useState(data.distributer?data.distributer.provider:[]);
     const initialRender = useRef(true);
@@ -106,13 +106,13 @@ const Distributer = React.memo((props) => {
                             />
                             <br/>
                             <div style={{ justifyContent: 'center' }} className={classes.row}>
-                                <div style={{background: selectType==='Все'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Все')}} className={classes.selectType}>
+                                <div style={{background: selectType==='Все'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Все')}} className={classes.selectType}>
                                     Все
                                 </div>
-                                <div style={{background: selectType==='Свободные'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Свободные')}} className={classes.selectType}>
+                                <div style={{background: selectType==='Свободные'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Свободные')}} className={classes.selectType}>
                                     Своб
                                 </div>
-                                <div style={{background: selectType==='Выбраные'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Выбраные')}} className={classes.selectType}>
+                                <div style={{background: selectType==='Выбраные'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Выбраные')}} className={classes.selectType}>
                                     Выбр {filter==='sales'?sales.length:provider.length}
                                 </div>
                             </div>

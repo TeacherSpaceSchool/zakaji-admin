@@ -4,7 +4,7 @@ import App from '../../layouts/App';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActions from '../../redux/actions/user'
-import { getNotificationStatistics } from '../../src/gql/notificationStatisticAzyk'
+import { getNotificationStatistics } from '../../src/gql/notificationStatisticZakaji'
 import pageListStyle from '../../src/styleMUI/notificationStatistic/notificationStatisticList'
 import CardNotificationStatistic from '../../components/notificationStatistic/CardNotificationStatistic'
 import { urlMain } from '../../redux/constants/other'

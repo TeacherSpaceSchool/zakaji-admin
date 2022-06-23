@@ -86,7 +86,7 @@ const OrderGeoStatistic = React.memo((props) => {
                                                 key={`address${idx}`}
                                                 options={{
                                                     draggable: false,
-                                                    iconColor: '#ffb300'
+                                                    iconColor: '#004C3F'
                                                 }}
                                                 properties={{iconCaption: `${address[2] ? `${address[2]}, ` : ''}${address[0]}`}}
                                                 geometry={address[1].split(', ')}/>

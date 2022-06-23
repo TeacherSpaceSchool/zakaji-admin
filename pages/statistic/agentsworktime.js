@@ -49,7 +49,7 @@ const AgentsWorkTime = React.memo((props) => {
             else {
                 await showLoad(true)
                 setOrganization(undefined)
-                setActiveOrganization([{name: 'AZYK.STORE', _id: 'super'}, ...(await getActiveOrganization(city)).activeOrganization])
+                setActiveOrganization([{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getActiveOrganization(city)).activeOrganization])
                 await showLoad(false)
             }
         })()
@@ -134,7 +134,7 @@ AgentsWorkTime.getInitialProps = async function(ctx) {
     return {
         data: {
             activeOrganization: [
-                {name: 'AZYK.STORE', _id: 'super'},
+                {name: 'ZAKAJI.KG', _id: 'super'},
                 ...(ctx.store.getState().user.profile.role==='суперорганизация'?[]:(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization)
             ],
             dateStart: pdDatePicker(dateStart)

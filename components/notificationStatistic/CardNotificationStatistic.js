@@ -6,7 +6,7 @@ import cardAdsStyle from '../../src/styleMUI/notificationStatistic/cardNotificat
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
-import { addNotificationStatistic } from '../../src/gql/notificationStatisticAzyk'
+import { addNotificationStatistic } from '../../src/gql/notificationStatisticZakaji'
 import TextField from '@material-ui/core/TextField';
 import { bindActionCreators } from 'redux'
 import * as snackbarActions from '../../redux/actions/snackbar'

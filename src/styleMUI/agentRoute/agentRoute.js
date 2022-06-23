@@ -155,7 +155,7 @@ export default makeStyles({
         whiteSpace: 'pre-wrap',
         cursor: 'pointer',
         fontWeight: 'bold',
-        borderBottom: '1px dashed #ffb300'
+        borderBottom: '1px dashed #004C3F'
     },
 
 })

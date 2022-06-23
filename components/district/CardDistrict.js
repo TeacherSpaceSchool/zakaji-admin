@@ -28,7 +28,7 @@ const CardDistrict = React.memo((props) => {
                         </div>
                         <div className={classes.row}>
                             <div className={classes.nameField}>Организация:&nbsp;</div>
-                            <div className={classes.value}>{element.organization?element.organization.name:'AZYK.STORE'}</div>
+                            <div className={classes.value}>{element.organization?element.organization.name:'ZAKAJI.KG'}</div>
                         </div>
                         {
                             element.manager?

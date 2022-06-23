@@ -238,7 +238,7 @@ const DiscountClient = React.memo((props) => {
                                                       setSelectedClients([...selectedClients])
                                                   }}
                                         />
-                                        <b style={{color: '#ffb300'}}>{discountClients[element._id]?discountClients[element._id].discount:0}%</b>
+                                        <b style={{color: '#004C3F'}}>{discountClients[element._id]?discountClients[element._id].discount:0}%</b>
                                     </div>
                                     <LazyLoad scrollContainer={'.App-body'} key={element._id}
                                               height={height} offset={[height, 0]} debounce={0}

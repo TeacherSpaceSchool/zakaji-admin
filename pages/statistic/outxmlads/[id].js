@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import App from '../../../layouts/App';
 import pageListStyle from '../../../src/styleMUI/blog/blogList'
-import {outXMLAdsShoros, districtsOutXMLAdsShoros} from '../../../src/gql/outxmladsazyk'
+import {outXMLAdsShoros, districtsOutXMLAdsShoros} from '../../../src/gql/outxmladszakaji'
 import CardOutXMLAds from '../../../components/outXmlAds/CardOutXMLAds'
 import { connect } from 'react-redux'
 import { urlMain } from '../../../redux/constants/other'

@@ -19,5 +19,5 @@ app.prepare()
                 handle(req, res, parsedUrl)
             }
         })
-            .listen(process.env.URL==='azyk.store'?5000:80)
+            .listen(process.env.URL==='zakaji.kg'?5000:80)
     })

@@ -219,7 +219,7 @@ const Catalog = React.memo((props) => {
                                                             row.organization.consignation?
                                                                 <>
                                                                 &nbsp;&nbsp;&nbsp;
-                                                                <div className={classes.showCons} style={{color: basket[row._id]&&basket[row._id].showConsignment?'#ffb300':'#000'}} onClick={()=>{
+                                                                <div className={classes.showCons} style={{color: basket[row._id]&&basket[row._id].showConsignment?'#004C3F':'#000'}} onClick={()=>{
                                                                     showConsignment(idx)
                                                                 }}>
                                                                     КОНС
@@ -230,13 +230,13 @@ const Catalog = React.memo((props) => {
                                                         }
                                                     </div>
                                                     {row.apiece?
-                                                        <div className={classes.addPackaging} style={{color: '#ffb300'}} onClick={()=>{
+                                                        <div className={classes.addPackaging} style={{color: '#004C3F'}} onClick={()=>{
                                                             addPackaging(idx)
                                                         }}>
                                                             Добавить упаковку
                                                         </div>
                                                         :
-                                                        <div className={classes.addPackaging} style={{color: '#ffb300'}}>
+                                                        <div className={classes.addPackaging} style={{color: '#004C3F'}}>
                                                             Упаковок: {basket[row._id]?(basket[row._id].count/row.packaging).toFixed(1):0}
                                                         </div>
                                                     }
@@ -250,7 +250,7 @@ const Catalog = React.memo((props) => {
                                                                 <div className={classes.valuecons}>{basket[row._id]?basket[row._id].consignment:0}&nbsp;шт</div>
                                                                 <div className={classes.counterbtncons} onClick={()=>{incrementConsignment(idx)}}>+</div>
                                                             </div>
-                                                            <div className={classes.addPackaging} style={{color: '#ffb300'}} onClick={()=>{
+                                                            <div className={classes.addPackaging} style={{color: '#004C3F'}} onClick={()=>{
                                                                 addPackagingConsignment(idx)
                                                             }}>
                                                                 Добавить упаковку

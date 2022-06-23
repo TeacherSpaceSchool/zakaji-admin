@@ -63,7 +63,7 @@ const Geo =  React.memo(
                                                     key={`client${idx}`}
                                                     options={{
                                                         draggable: false,
-                                                        iconColor: '#ffb300'
+                                                        iconColor: '#004C3F'
                                                     }}
                                                     properties={{iconCaption: `${client.address[0][2] ? `${client.address[0][2]}, ` : ''}${client.address[0][0]}`}}
                                                     geometry={client.address[0][1].split(', ')}/>
@@ -94,7 +94,7 @@ const Geo =  React.memo(
                                             key={`client${idx}`}
                                             options={{
                                                 draggable: false,
-                                                iconColor: '#ffb300'
+                                                iconColor: '#004C3F'
                                             }}
                                             properties={{iconCaption: `${client.address[0][2] ? `${client.address[0][2]}, ` : ''}${client.address[0][0]}`}}
                                             geometry={client.address[0][1].split(', ')}/>

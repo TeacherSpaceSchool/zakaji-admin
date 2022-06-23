@@ -49,7 +49,7 @@ const UnloadingInvoices = React.memo((props) => {
                     <div className={classes.row}>
                         <Autocomplete
                             className={classes.input}
-                            options={[{name: 'AZYK.STORE', _id: 'super'}, ...data.activeOrganization]}
+                            options={[{name: 'ZAKAJI.KG', _id: 'super'}, ...data.activeOrganization]}
                             getOptionLabel={option => option.name}
                             value={organization}
                             onChange={(event, newValue) => {
@@ -78,7 +78,7 @@ const UnloadingInvoices = React.memo((props) => {
                     <div className={classes.row}>
                         <Autocomplete
                             className={classes.input}
-                            options={[{name: 'AZYK.STORE', _id: 'super'}, ...data.activeOrganization]}
+                            options={[{name: 'ZAKAJI.KG', _id: 'super'}, ...data.activeOrganization]}
                             getOptionLabel={option => option.name}
                             value={forwarder}
                             onChange={(event, newValue) => {

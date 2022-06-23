@@ -14,20 +14,20 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const list = {
-    statisticAzykStore: [
+    statisticZakaji: [
         {
-            name: 'Статистика агента AZYK.STORE',
-            link: '/statistic/agentAzykStore',
+            name: 'Статистика агента ZAKAJI.KG',
+            link: '/statistic/agentZakaji',
             role: ['admin']
         },
         {
-            name: 'Статистика агентов AZYK.STORE',
-            link: '/statistic/agentsAzykStore',
+            name: 'Статистика агентов ZAKAJI.KG',
+            link: '/statistic/agentsZakaji',
             role: ['admin']
         },
         {
-            name: 'Статистика заказов AZYK.STORE',
-            link: '/statistic/orderAzykStore',
+            name: 'Статистика заказов ZAKAJI.KG',
+            link: '/statistic/orderZakaji',
             role: ['admin']
         }
     ],
@@ -327,11 +327,11 @@ const Statistic = React.memo((props) => {
                     tools: [],
                     integrate: [],
                     load: [],
-                    statisticAzykStore: []
+                    statisticZakaji: []
                 }
-                for (let i = 0; i < list.statisticAzykStore.length; i++) {
-                    if (list.statisticAzykStore[i].name.toLowerCase().includes(search.toLowerCase()) && list.statisticAzykStore[i].role.includes(profile.role))
-                        showList.statisticAzykStore.push(list.statisticAzykStore[i])
+                for (let i = 0; i < list.statisticZakaji.length; i++) {
+                    if (list.statisticZakaji[i].name.toLowerCase().includes(search.toLowerCase()) && list.statisticZakaji[i].role.includes(profile.role))
+                        showList.statisticZakaji.push(list.statisticZakaji[i])
                 }
                 for (let i = 0; i < list.statistic.length; i++) {
                     if (list.statistic[i].name.toLowerCase().includes(search.toLowerCase()) && list.statistic[i].role.includes(profile.role))
@@ -487,19 +487,19 @@ const Statistic = React.memo((props) => {
                         null
                 }
                 {
-                    showList.statisticAzykStore&&showList.statisticAzykStore.length>0?
-                        <ExpansionPanel expanded={expanded === 'statisticAzykStore'} onChange={handleChange('statisticAzykStore')} style={{width: 'calc(100% - 20px)', margin: 10, background: '#F5F5F5'}}>
+                    showList.statisticZakaji&&showList.statisticZakaji.length>0?
+                        <ExpansionPanel expanded={expanded === 'statisticZakaji'} onChange={handleChange('statisticZakaji')} style={{width: 'calc(100% - 20px)', margin: 10, background: '#F5F5F5'}}>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls='panel1a-content'
                                 id='panel1a-header'
                                 style={{background: '#fff'}}
                             >
-                                <h3>Статистика AZYK.STORE</h3>
+                                <h3>Статистика ZAKAJI.KG</h3>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails className={classes.page} >
-                                {showList.statisticAzykStore.map((element, idx)=>
-                                    <Link key={`statAzykStore${idx}`} href={element.link}>
+                                {showList.statisticZakaji.map((element, idx)=>
+                                    <Link key={`statZakaji${idx}`} href={element.link}>
                                         <Card className={isMobileApp?classes.cardM:classes.cardD}>
                                             <CardActionArea>
                                                 <div className={classes.line}>
@@ -536,11 +536,11 @@ Statistic.getInitialProps = async function(ctx) {
         tools: [],
         integrate: [],
         load: [],
-        statisticAzykStore: []
+        statisticZakaji: []
     }
-    for(let i=0; i<list.statisticAzykStore.length; i++){
-        if(list.statisticAzykStore[i].role.includes(ctx.store.getState().user.profile.role))
-            showList.statisticAzykStore.push(list.statisticAzykStore[i])
+    for(let i=0; i<list.statisticZakaji.length; i++){
+        if(list.statisticZakaji[i].role.includes(ctx.store.getState().user.profile.role))
+            showList.statisticZakaji.push(list.statisticZakaji[i])
     }
     for(let i=0; i<list.statistic.length; i++){
         if(list.statistic[i].role.includes(ctx.store.getState().user.profile.role))

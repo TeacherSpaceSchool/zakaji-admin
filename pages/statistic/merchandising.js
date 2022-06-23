@@ -106,7 +106,7 @@ const MerchandisingStatistic = React.memo((props) => {
                             profile.role === 'admin' ?
                                 <Autocomplete
                                     className={agents&&agents.length?classes.inputThird:classes.input}
-                                    options={[{name: 'AZYK.STORE', _id: undefined}, ...activeOrganization]}
+                                    options={[{name: 'ZAKAJI.KG', _id: undefined}, ...activeOrganization]}
                                     getOptionLabel={option => option.name}
                                     value={organization}
                                     onChange={(event, newValue) => {
@@ -199,7 +199,7 @@ MerchandisingStatistic.getInitialProps = async function(ctx) {
             Router.push('/contact')
     let organization
     if(ctx.store.getState().user.profile.role==='admin')
-        organization = {name: 'AZYK.STORE', _id: undefined}
+        organization = {name: 'ZAKAJI.KG', _id: undefined}
     else
         organization = {_id: ctx.store.getState().user.profile.organization}
 

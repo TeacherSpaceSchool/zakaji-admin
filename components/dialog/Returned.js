@@ -101,7 +101,7 @@ const Returned =  React.memo(
                     <div className={classes.nameField}>Адрес: &nbsp;</div>
                     <div className={classes.value}>{`${element.address[2]?`${element.address[2]}, `:''}${element.address[0]}${element.city?` (${element.city})`:''}`}</div>
                 </div>
-                <div className={classes.geo} style={{color: element.address[1]?'#ffb300':'red'}} onClick={()=>{
+                <div className={classes.geo} style={{color: element.address[1]?'#004C3F':'red'}} onClick={()=>{
                     if(element.address[1]) {
                         setFullDialog('Геолокация', <Geo geo={element.address[1]}/>)
                         showFullDialog(true)

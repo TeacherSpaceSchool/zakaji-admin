@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://azyk.store/sitemap.xml
+Sitemap: https://zakaji.kg/sitemap.xml

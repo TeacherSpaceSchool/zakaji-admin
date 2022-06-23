@@ -12,7 +12,7 @@ export default makeStyles({
         fontFamily: 'Roboto',
         whiteSpace: 'pre-wrap',
         cursor: 'pointer',
-        borderBottom: '1px dashed #ffb300',
+        borderBottom: '1px dashed #004C3F',
         userSelect: 'none',
         width: 145
     },
@@ -72,7 +72,7 @@ export default makeStyles({
         marginBottom: 10
     },
     inBasket: {
-        color: '#ffb300',
+        color: '#004C3F',
         textDecoration: 'line-through',
         fontSize: '1.25rem',
         fontFamily: 'Roboto',
@@ -150,7 +150,7 @@ export default makeStyles({
         fontWeight: 'bold',
         color: '#C0C0C0',
         '&:hover': {
-            color: '#ffb300',
+            color: '#004C3F',
         },
     },
     chip: {

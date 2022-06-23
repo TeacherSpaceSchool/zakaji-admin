@@ -383,13 +383,13 @@ const Catalog = React.memo((props) => {
                                                             </div>
                                                         </div>
                                                         &nbsp;&nbsp;&nbsp;
-                                                        <div className={classes.showCons} style={{color: basket[row._id]&&basket[row._id].showConsignment?'#ffb300':'#000'}} onClick={()=>{
+                                                        <div className={classes.showCons} style={{color: basket[row._id]&&basket[row._id].showConsignment?'#004C3F':'#000'}} onClick={()=>{
                                                             showConsignment(idx)
                                                         }}>
                                                             КОНС
                                                         </div>
                                                     </div>
-                                                    <div className={classes.addPackaging} style={{color: '#ffb300'}} onClick={()=>{
+                                                    <div className={classes.addPackaging} style={{color: '#004C3F'}} onClick={()=>{
                                                         setMiniDialog('Упаковок', <SetPackage
                                                             action={setPackage}
                                                             idx={idx}/>)
@@ -407,7 +407,7 @@ const Catalog = React.memo((props) => {
                                                                 <div className={classes.valuecons}>{basket[row._id]?basket[row._id].consignment:0}&nbsp;шт</div>
                                                                 <div className={classes.counterbtncons} onClick={()=>{incrementConsignment(idx)}}>+</div>
                                                             </div>
-                                                            <div className={classes.addPackaging} style={{color: '#ffb300'}} onClick={()=>{
+                                                            <div className={classes.addPackaging} style={{color: '#004C3F'}} onClick={()=>{
                                                                 setMiniDialog('Упаковок', <SetPackage
                                                                     action={setPackageConsignment}
                                                                     idx={idx}/>)

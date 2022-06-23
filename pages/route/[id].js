@@ -56,7 +56,7 @@ const Route = React.memo((props) => {
     const { showSnackBar } = props.snackbarActions;
     const { showLoad } = props.appActions;
     let [screen, setScreen] = useState('setting');
-    let [provider, setProvider] = useState(data.route?data.route.provider?data.route.provider:{name: 'AZYK.STORE', _id: 'super'}:{});
+    let [provider, setProvider] = useState(data.route?data.route.provider?data.route.provider:{name: 'ZAKAJI.KG', _id: 'super'}:{});
     let handleProvider = (async (provider) => {
         setSelectDistricts([])
         setSelectProdusers([])
@@ -188,10 +188,10 @@ const Route = React.memo((props) => {
                     <Card className={isMobileApp?classes.pageM:classes.pageD}>
                         <CardContent className={classes.column}>
                             <div style={{ justifyContent: 'center' }} className={classes.row}>
-                                <div style={{background: screen==='setting'?'#ffb300':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('setting')}} className={classes.selectType}>
+                                <div style={{background: screen==='setting'?'#004C3F':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('setting')}} className={classes.selectType}>
                                     Настройки
                                 </div>
-                                <div style={{background: screen==='invoices'?'#ffb300':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('invoices')}} className={classes.selectType}>
+                                <div style={{background: screen==='invoices'?'#004C3F':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('invoices')}} className={classes.selectType}>
                                     Заказы {selectedOrders.length}/{orders.length}
                                 </div>
                             </div>
@@ -642,7 +642,7 @@ Route.getInitialProps = async function(ctx) {
     return {
         data: {
             route: (await getRoute({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).route,
-            organizations: ctx.query.id==='new'?[...ctx.store.getState().user.profile.role==='admin'?[{name: 'AZYK.STORE', _id: 'super'}]:[], ...(await getActiveOrganization('Бишкек', ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]:[]
+            organizations: ctx.query.id==='new'?[...ctx.store.getState().user.profile.role==='admin'?[{name: 'ZAKAJI.KG', _id: 'super'}]:[], ...(await getActiveOrganization('Бишкек', ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]:[]
         }
     };
 };

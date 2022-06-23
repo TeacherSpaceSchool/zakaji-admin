@@ -90,7 +90,7 @@ const Client = React.memo((props) => {
     let superRoles = ['суперменеджер', 'суперагент', 'суперэкспедитор']
     useEffect(()=>{
         if(router.query.id!=='new'&&!organization.name){
-            setOrganization({name: 'AZYK.STORE', _id: 'super'})
+            setOrganization({name: 'ZAKAJI.KG', _id: 'super'})
         }
     },[])
     return (
@@ -337,7 +337,7 @@ Client.getInitialProps = async function(ctx) {
         data: {
             ...ctx.query.id!=='new'?await getEmployment({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined):{employment:{name: '',email: '',phone: [], user: {login: '',status: '',role: '',},organization: {_id: ''},}},
             organizations: [
-                {name: 'AZYK.STORE', _id: 'super'},
+                {name: 'ZAKAJI.KG', _id: 'super'},
                 ...(await getOrganizations({search: '', filter: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).organizations
             ]
 

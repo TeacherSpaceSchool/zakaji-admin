@@ -52,7 +52,7 @@ const AgentHistoryGeo = React.memo((props) => {
             else {
                 await showLoad(true)
                 setOrganization(undefined)
-                setActiveOrganization([{name: 'AZYK.STORE', _id: 'super'}, ...(await getActiveOrganization(city)).activeOrganization])
+                setActiveOrganization([{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getActiveOrganization(city)).activeOrganization])
                 setCount(0)
                 setAgents((await getAgents({})).agents)
                 setAgent({_id: undefined})
@@ -199,7 +199,7 @@ AgentHistoryGeo.getInitialProps = async function(ctx) {
             Router.push('/contact')
     return {
         data: {
-            activeOrganization: [{name: 'AZYK.STORE', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]
+            activeOrganization: [{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization]
         }
     };
 };

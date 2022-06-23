@@ -4,13 +4,13 @@ export let urlMain
 export let urlSubscribe
 export let applicationKey
 export let urlGQLSSR
-if(process.env.URL==='azyk.store') {
+if(process.env.URL==='zakaji.kg') {
     urlGQLSSR = `http://localhost:4000/graphql`
     urlGQL = `https://${process.env.URL}:3000/graphql`
     urlGQLws = `wss://${process.env.URL}:3000/graphql`
     urlSubscribe = `https://${process.env.URL}:3000/subscribe`
     urlMain = `https://${process.env.URL}`
-    applicationKey = 'BDbYgfB_0iu1aqu7AHHTervMZnvSjYQtZsm-kKCQ9NH58DU-iRKDk0U-tiio1NzHi25ceaatYrM4c6Oqj1KvnXM'
+    applicationKey = 'BOiWaJnJhA0NXMN0lW8fDtGbSG1cbXXvNt35rHlKMjZxdyizjPZkqKmZSTAGPe8AcX0VsCVqdIgxkoVBcqZVC2I'
 }
 else {
     urlGQLSSR = `http://localhost:3000/graphql`
@@ -18,7 +18,7 @@ else {
     urlGQLws = `ws://${process.env.URL}:3000/graphql`
     urlMain = `http://${process.env.URL}`
     urlSubscribe = `http://${process.env.URL}:3000/subscribe`
-    applicationKey = 'BK-3F2fhksf0HPhIXEp9gZ0y1jaR7pyq_i3mEIIimN1IIEwsAeZBz6Iv7WZRhKMr7o-3spBGpZ0XY1WlwCD7Sfc'
+    applicationKey = 'BAMP-llC12ev90GZvYhaC6VDANTdFYkfybu-IQfTarHBXgut832yHfJnpu0RDPniVjlwgTOwXmo4puO9zXszeq8'
 }
 
 export const validMail = (mail) =>

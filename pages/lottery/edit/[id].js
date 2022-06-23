@@ -109,10 +109,10 @@ const LotteryEdit = React.memo((props) => {
                                                 null
                                                 :
                                                 <div style={{ justifyContent: 'center' }} className={classes.row}>
-                                                    <div style={{background: screen==='setting'?'#ffb300':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('setting')}} className={classes.selectType}>
+                                                    <div style={{background: screen==='setting'?'#004C3F':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('setting')}} className={classes.selectType}>
                                                         Настройки
                                                     </div>
-                                                    <div style={{background: screen==='tickets'?'#ffb300':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('tickets')}} className={classes.selectType}>
+                                                    <div style={{background: screen==='tickets'?'#004C3F':'#ffffff'}} onClick={()=>{setPagination(100);setScreen('tickets')}} className={classes.selectType}>
                                                         Билеты {tickets.length}
                                                     </div>
                                                 </div>

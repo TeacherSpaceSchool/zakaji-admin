@@ -99,7 +99,7 @@ const Geo =  React.memo(
                                             <Placemark
                                                 options={{
                                                     draggable: false,
-                                                    iconColor: '#ffb300'
+                                                    iconColor: '#004C3F'
                                                 }}
                                                 properties={{iconCaption: 'Cклад'}}
                                                 geometry={legs[0][0].split(', ')}/>
@@ -134,7 +134,7 @@ const Geo =  React.memo(
                                                     }}
                                                     options={{
                                                         draggable: false,
-                                                        iconColor: invoice.confirmationForwarder?'#ffb300':'#ff0000'
+                                                        iconColor: invoice.confirmationForwarder?'#004C3F':'#ff0000'
                                                     }}
                                                     properties={{iconCaption: `${idx+1}) ${invoice.address[2] ? `${invoice.address[2]}, ` : ''}${invoice.address[0]}`}}
                                                     geometry={invoice.address[1].split(', ')}/>
@@ -179,7 +179,7 @@ const Geo =  React.memo(
                                             <Placemark
                                                 options={{
                                                     draggable: false,
-                                                    iconColor: '#ffb300'
+                                                    iconColor: '#004C3F'
                                                 }}
                                                 properties={{iconCaption: 'Cклад'}}
                                                 geometry={legs[0][0].split(', ')}/>
@@ -193,7 +193,7 @@ const Geo =  React.memo(
                                                     key={invoice._id}
                                                     options={{
                                                         draggable: false,
-                                                        iconColor: invoice.confirmationForwarder?'#ffb300':'#ff0000'
+                                                        iconColor: invoice.confirmationForwarder?'#004C3F':'#ff0000'
                                                     }}
                                                     onClick={async () => {
                                                         let _elemenet = (await getOrder({_id: invoice._id})).invoice

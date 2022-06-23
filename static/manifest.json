@@ -1,6 +1,6 @@
 {
-  "short_name": "AZYK.STORE",
-  "name": "AZYK.STORE",
+  "short_name": "ZAKAJI.KG",
+  "name": "ZAKAJI.KG",
   "icons": [
     {
       "src": "/static/192x192.png",
@@ -20,6 +20,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#ffb300",
+  "theme_color": "#004C3F",
   "background_color": "#ffffff"
 }

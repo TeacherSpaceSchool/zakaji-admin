@@ -25,7 +25,7 @@ const ListOrder =  React.memo(
                     _list.map((element, idx)=>
                         <div key={element._id} className={classes.row}>
                             {idx+1})&nbsp;
-                            <div style={{color: element.confirmationForwarder?'#ffb300':'#ff0000', cursor: 'pointer'}} className={classes.value}
+                            <div style={{color: element.confirmationForwarder?'#004C3F':'#ff0000', cursor: 'pointer'}} className={classes.value}
                                  onClick={async() => {
                                      let _elemenet = (await getOrder({_id: element._id})).invoice
                                      if(_elemenet) {

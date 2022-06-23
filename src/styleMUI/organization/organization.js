@@ -21,7 +21,7 @@ export default makeStyles({
         fontFamily: 'Roboto',
         whiteSpace: 'pre-wrap',
         cursor: 'pointer',
-        borderBottom: '1px dashed #ffb300'
+        borderBottom: '1px dashed #004C3F'
     },
     media: {
         objectFit: 'cover',

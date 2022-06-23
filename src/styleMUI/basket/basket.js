@@ -17,7 +17,7 @@ export default makeStyles({
         fontFamily: 'Roboto',
         whiteSpace: 'pre-wrap',
         cursor: 'pointer',
-        borderBottom: '1px dashed #ffb300',
+        borderBottom: '1px dashed #004C3F',
         userSelect: 'none',
         width: 125
     },
@@ -28,7 +28,7 @@ export default makeStyles({
         fontFamily: 'Roboto',
         whiteSpace: 'pre-wrap',
         cursor: 'pointer',
-        borderBottom: '1px dashed #ffb300',
+        borderBottom: '1px dashed #004C3F',
         userSelect: 'none',
         width: 145
     },
@@ -201,7 +201,7 @@ export default makeStyles({
         fontWeight: 'bold',
         fontSize: '1.125rem',
         fontFamily: 'Roboto',
-        background: '#ffb300',
+        background: '#004C3F',
         marginRight: 15
 
     },
@@ -237,7 +237,7 @@ export default makeStyles({
         fontWeight: 'bold',
         fontSize: '1rem',
         fontFamily: 'Roboto',
-        background: '#ffb300',
+        background: '#004C3F',
         marginRight: 15
 
     },

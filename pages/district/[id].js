@@ -63,7 +63,7 @@ const District = React.memo((props) => {
     let handleEcspeditor =  (event) => {
         setEcspeditor({_id: event.target.value, name: event.target.name})
     };
-    let [organization, setOrganization] = useState(router.query.id==='new'||!data.district?{}:data.district.organization?{_id: data.district.organization._id, name: data.district.organization.name}:{name: 'AZYK.STORE', _id: 'super'});
+    let [organization, setOrganization] = useState(router.query.id==='new'||!data.district?{}:data.district.organization?{_id: data.district.organization._id, name: data.district.organization.name}:{name: 'ZAKAJI.KG', _id: 'super'});
     let handleOrganization =  (event) => {
         setOrganization({_id: event.target.value, name: event.target.name})
     };
@@ -284,13 +284,13 @@ const District = React.memo((props) => {
                             <br/>
                             {['admin', 'суперорганизация', 'агент', 'организация', 'менеджер'].includes(profile.role)?
                                 <div style={{ justifyContent: 'center' }} className={classes.row}>
-                                    <div style={{background: selectType==='Все'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Все')}} className={classes.selectType}>
+                                    <div style={{background: selectType==='Все'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Все')}} className={classes.selectType}>
                                         Все
                                     </div>
-                                    <div style={{background: selectType==='Свободные'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Свободные')}} className={classes.selectType}>
+                                    <div style={{background: selectType==='Свободные'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Свободные')}} className={classes.selectType}>
                                         {`Своб. ${unselectedClient.length}`}
                                     </div>
-                                    <div style={{background: selectType==='Выбраные'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Выбраные')}} className={classes.selectType}>
+                                    <div style={{background: selectType==='Выбраные'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Выбраные')}} className={classes.selectType}>
                                         {`Выбр. ${client.length}`}
                                     </div>
                                 </div>
@@ -428,7 +428,7 @@ District.getInitialProps = async function(ctx) {
     return {
         data: {
             ...ctx.query.id!=='new'?await getDistrict({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined): {district: {organization: {}, client: [], name: '', agent: {}, ecspeditor: {}}},
-            organizations: [{name: 'AZYK.STORE', _id: 'super'}, ...(await getOrganizations({search: '', filter: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).organizations]
+            organizations: [{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getOrganizations({search: '', filter: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).organizations]
         }
     };
 };

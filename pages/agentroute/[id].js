@@ -71,7 +71,7 @@ const AgentRoute = React.memo((props) => {
         setDistrict(district)
         setClients([[],[],[],[],[],[],[]])
     };
-    let [organization, setOrganization] = useState(router.query.id==='new'||!data.agentRoute?{}:data.agentRoute.organization?{_id: data.agentRoute.organization._id, name: data.agentRoute.organization.name}:{name: 'AZYK.STORE', _id: 'super'});
+    let [organization, setOrganization] = useState(router.query.id==='new'||!data.agentRoute?{}:data.agentRoute.organization?{_id: data.agentRoute.organization._id, name: data.agentRoute.organization.name}:{name: 'ZAKAJI.KG', _id: 'super'});
     let handleOrganization =  (event) => {
         setOrganization({_id: event.target.value, name: event.target.name})
         setClients([[],[],[],[],[],[],[]])
@@ -202,37 +202,37 @@ const AgentRoute = React.memo((props) => {
                         }
                         <br/>
                         <div style={{ justifyContent: 'center' }} className={classes.row}>
-                            <div style={{background: selectType==='Все'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Все')}} className={classes.selectType}>
+                            <div style={{background: selectType==='Все'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Все')}} className={classes.selectType}>
                                 Все
                             </div>
-                            <div style={{background: selectType==='Свободные'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Свободные')}} className={classes.selectType}>
+                            <div style={{background: selectType==='Свободные'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Свободные')}} className={classes.selectType}>
                                 Своб
                             </div>
-                            <div style={{background: selectType==='Выбраные'?'#ffb300':'#ffffff'}} onClick={()=>{setSelectType('Выбраные')}} className={classes.selectType}>
+                            <div style={{background: selectType==='Выбраные'?'#004C3F':'#ffffff'}} onClick={()=>{setSelectType('Выбраные')}} className={classes.selectType}>
                                 Выбр
                             </div>
                         </div>
                         <br/>
                             <div style={{ justifyContent: 'center' }} className={classes.row}>
-                                <div style={{background: dayWeek===0?'#ffb300':'#ffffff'}} onClick={()=>{setDayWeek(0)}} className={classes.selectType}>
+                                <div style={{background: dayWeek===0?'#004C3F':'#ffffff'}} onClick={()=>{setDayWeek(0)}} className={classes.selectType}>
                                     {`ПН ${clients[0].length}`}
                                 </div>
-                                <div style={{background: dayWeek===1?'#ffb300':'#ffffff'}} onClick={()=>{setDayWeek(1)}} className={classes.selectType}>
+                                <div style={{background: dayWeek===1?'#004C3F':'#ffffff'}} onClick={()=>{setDayWeek(1)}} className={classes.selectType}>
                                     {`ВТ ${clients[1].length}`}
                                 </div>
-                                <div style={{background: dayWeek===2?'#ffb300':'#ffffff'}} onClick={()=>{setDayWeek(2)}} className={classes.selectType}>
+                                <div style={{background: dayWeek===2?'#004C3F':'#ffffff'}} onClick={()=>{setDayWeek(2)}} className={classes.selectType}>
                                     {`СР ${clients[2].length}`}
                                 </div>
-                                <div style={{background: dayWeek===3?'#ffb300':'#ffffff'}} onClick={()=>{setDayWeek(3)}} className={classes.selectType}>
+                                <div style={{background: dayWeek===3?'#004C3F':'#ffffff'}} onClick={()=>{setDayWeek(3)}} className={classes.selectType}>
                                     {`ЧТ ${clients[3].length}`}
                                 </div>
-                                <div style={{background: dayWeek===4?'#ffb300':'#ffffff'}} onClick={()=>{setDayWeek(4)}} className={classes.selectType}>
+                                <div style={{background: dayWeek===4?'#004C3F':'#ffffff'}} onClick={()=>{setDayWeek(4)}} className={classes.selectType}>
                                     {`ПТ ${clients[4].length}`}
                                 </div>
-                                <div style={{background: dayWeek===5?'#ffb300':'#ffffff'}} onClick={()=>{setDayWeek(5)}} className={classes.selectType}>
+                                <div style={{background: dayWeek===5?'#004C3F':'#ffffff'}} onClick={()=>{setDayWeek(5)}} className={classes.selectType}>
                                     {`СБ ${clients[5].length}`}
                                 </div>
-                                <div style={{background: dayWeek===6?'#ffb300':'#ffffff'}} onClick={()=>{setDayWeek(6)}} className={classes.selectType}>
+                                <div style={{background: dayWeek===6?'#004C3F':'#ffffff'}} onClick={()=>{setDayWeek(6)}} className={classes.selectType}>
                                     {`ВС ${clients[6].length}`}
                                 </div>
                             </div>
@@ -391,7 +391,7 @@ AgentRoute.getInitialProps = async function(ctx) {
     return {
         data: {
             ...ctx.query.id!=='new'?await getAgentRoute({_id: ctx.query.id}, ctx.req?await getClientGqlSsr(ctx.req):undefined): {agentRoute: {organization: {}, clients: [[],[],[],[],[],[],[]], name: '', district: {}}},
-            organizations: [{name: 'AZYK.STORE', _id: 'super'}, ...(await getOrganizations({search: '', filter: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).organizations]
+            organizations: [{name: 'ZAKAJI.KG', _id: 'super'}, ...(await getOrganizations({search: '', filter: ''}, ctx.req?await getClientGqlSsr(ctx.req):undefined)).organizations]
         }
     };
 };

@@ -105,7 +105,7 @@ UnloadingAgentRoutes.getInitialProps = async function(ctx) {
         data:
             {
                 activeOrganization: [
-                    {name: 'AZYK.STORE', _id: 'super'},
+                    {name: 'ZAKAJI.KG', _id: 'super'},
                     ...(await getActiveOrganization(ctx.store.getState().app.city, ctx.req?await getClientGqlSsr(ctx.req):undefined)).activeOrganization
                 ]
             }

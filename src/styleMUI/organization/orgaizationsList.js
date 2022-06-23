@@ -50,7 +50,7 @@ export default makeStyles({
         '-khtml-user-select': 'none',
         '-moz-user-select': 'none',
         '-ms-user-select': 'none',
-        background: '#ffb300'
+        background: '#004C3F'
     },
     scrollDownContainer: {
         width: '100%',
